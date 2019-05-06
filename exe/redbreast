@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'commander'
+require 'commander/import'
+require 'redbreast'
+
+program :name, 'redbreast'
+program :version, Redbreast::VERSION
+program :description, 'An iOS client for safe and strong resources.'
+
+command :init do |c|
+  c.syntax = 'redbreast init'
+  c.description = 'Sets up a redbreast.yml config for selected project.'
+  c.action do |_args, options|
+    Redbreast::ErrorHandler.rescuable do
+        puts "TEST 1 - TODO"
+    end
+  end
+end
