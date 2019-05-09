@@ -14,7 +14,7 @@ command :init do |c|
   c.description = 'Sets up a redbreast.yml config for selected project.'
   c.action do |_args, options|
     Redbreast::ErrorHandler.rescuable do
-        puts "TEST 1 - TODO"
+      Redbreast::Command::Setup.init
     end
   end
 end
