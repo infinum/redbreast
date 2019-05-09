@@ -17,9 +17,9 @@ module Redbreast
   
         def call
           language = language_prompt
-          images_sources_path_prompt = sources_path_prompt
+          images_sources_path = images_sources_path_prompt
           project = {
-            imagesSourceFilesPath: images_sources_path_prompt
+            imagesSourceFilesPath: images_sources_path
           }
           config = {
             language: language,
