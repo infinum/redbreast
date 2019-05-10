@@ -3,7 +3,7 @@ require 'commander/command'
 
 module Redbreast
     module Command
-      class Setup < Projects
+      class Setup
         include Helper::Terminal
         include Helper::General
   
@@ -17,13 +17,18 @@ module Redbreast
   
         def call
           language = language_prompt
-          images_sources_path = images_sources_path_prompt
-          project = {
-            imagesSourceFilesPath: images_sources_path
-          }
+          bundle_names = bundle_names_prompt(language).split(" ")
+          bundles = bundle_names.map do |bundle| 
+            {
+                name: bundle,
+                reference: bundle_reference(bundle, language),
+                assetsSearchPath: assets_search_path_prompt(bundle),
+                outputSourcePath: images_sources_path_prompt(bundle, language)
+            }
+          end
           config = {
             language: language,
-            project: project
+            bundles: bundles
           }
           Redbreast::IO::Config.write(config)
           success
@@ -38,12 +43,43 @@ module Redbreast
           prompt.select('Choose a language: ', languages)
         end
   
-        # Images source path
-  
-        def images_sources_path_prompt
-          prompt.ask('Where would you like to store images source files?', default: './Common/Extensions/')
+        # Assets source path
+
+        def assets_search_path_prompt(bundle)
+          prompt.ask("Please enter assets folder search paths for bundle #{bundle}?", default: '**/*.xcassets')
         end
-  
+
+        # Bundle names promt
+        
+        def bundle_names_prompt(language)
+            case language
+            when "objc"
+              prompt.ask('Please enter bundle names that you use separated by spaces', default: 'mainBundle')
+            when "swift"
+              prompt.ask('Please enter bundle names that you use separated by spaces', default: 'main')
+            end
+        end
+
+        def bundle_reference(bundle_name, language)
+          case language
+          when "objc"
+            "[NSBundle #{bundle_name}]"
+          when "swift"
+            ".#{bundle_name}"
+          end
+        end
+
+        # Images source path
+
+        def images_sources_path_prompt(bundle, language)
+          case language
+          when "objc"
+            prompt.ask("Where would you like to store images resources files for bundle #{bundle}?", default: './Common/Categories/Images')
+          when "swift"
+            prompt.ask("Where would you like to store images resources files for bundle #{bundle}?", default: './Common/Extensions/UIImageExtension.swift')
+          end
+        end
+
       end
     end
   end

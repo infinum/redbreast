@@ -18,3 +18,13 @@ command :init do |c|
     end
   end
 end
+
+command :generate do |c|
+  c.syntax = 'redbreast generate'
+  c.description = 'Generate images strong reference files.'
+  c.action do |_args, options|
+    Redbreast::ErrorHandler.rescuable do
+      Redbreast::Command::ImageGenerator.init
+    end
+  end
+end

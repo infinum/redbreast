@@ -9,15 +9,15 @@ module Redbreast
                            "is", "nil", "rethrows", "super", "self", "Self", "throw", "throws", "true", "try", "_"]
     
         def config
-          @config ||= PolyglotIos::IO::Config.read.with_indifferent_access
-        end
-        
-        def project_config
-          @project_configs ||= config[:project]
+          @config ||= Redbreast::IO::Config.read
         end
   
         def programming_language
           @programming_language ||= config[:language]
+        end
+
+        def bundles
+          @bundles ||= config[:bundles]
         end
   
         def indent(level = 0, initial = "")
