@@ -25,6 +25,7 @@ command :generate do |c|
   c.action do |_args, options|
     Redbreast::ErrorHandler.rescuable do
       Redbreast::Command::ImageGenerator.init
+      Redbreast::Command::TestGenerator.init
     end
   end
 end

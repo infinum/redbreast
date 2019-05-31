@@ -6,6 +6,7 @@ module Redbreast
       class Setup
         include Helper::Terminal
         include Helper::General
+        include Helper::Hash
   
         def self.init(options = Commander::Command::Options.new)
           new(options).call
@@ -19,12 +20,18 @@ module Redbreast
           language = language_prompt
           bundle_names = bundle_names_prompt(language).split(" ")
           bundles = bundle_names.map do |bundle| 
+            reference = bundle_reference(bundle, language)
+            assets_search_path = assets_search_path_prompt(bundle)
+            output_source_path = images_sources_path_prompt(bundle, language)
+            include_tests = create_tests_path_prompt?(bundle)
             {
                 name: bundle,
-                reference: bundle_reference(bundle, language),
-                assetsSearchPath: assets_search_path_prompt(bundle),
-                outputSourcePath: images_sources_path_prompt(bundle, language)
-            }
+                reference: reference,
+                assetsSearchPath: assets_search_path,
+                outputSourcePath: output_source_path,
+                outputTestPath: include_tests ? tests_path_prompt(bundle, language) : nil,
+                testableImport: include_tests ? testable_import_prompt(bundle, language) : nil
+            }.compact
           end
           config = {
             language: language,
@@ -77,6 +84,30 @@ module Redbreast
             prompt.ask("Where would you like to store images resources files for bundle #{bundle}?", default: './Common/Categories/Images')
           when "swift"
             prompt.ask("Where would you like to store images resources files for bundle #{bundle}?", default: './Common/Extensions/UIImageExtension.swift')
+          end
+        end
+
+        # Tests
+
+        def create_tests_path_prompt?(bundle)
+          prompt.yes?("Would you like to create tests for bundle #{bundle}?")
+        end
+
+        def tests_path_prompt(bundle, language)
+          case language
+          when "objc"
+            prompt.ask("Where would you like to store tests for bundle #{bundle}?", default: './Common/Categories/ImagesTest')
+          when "swift"
+            prompt.ask("Where would you like to store tests for bundle #{bundle}?", default: './Common/Extensions/UIImageExtensionTest.swift')
+          end
+        end
+
+        def testable_import_prompt(bundle, language)
+          case language
+          when "objc"
+            nil
+          when "swift"
+            prompt.ask("Please enter testable import name for bundle #{bundle}?", required: true)
           end
         end
 

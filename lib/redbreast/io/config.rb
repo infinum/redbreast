@@ -17,4 +17,3 @@ module Redbreast
       end
     end
   end
-    
