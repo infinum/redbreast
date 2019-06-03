@@ -36,5 +36,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'tty-prompt'
   spec.add_dependency 'commander'
   spec.add_dependency 'activesupport'
+  spec.add_dependency 'xcodeproj'
 
 end

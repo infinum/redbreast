@@ -29,3 +29,13 @@ command :generate do |c|
     end
   end
 end
+
+command :install do |c|
+  c.syntax = 'redbreast install'
+  c.description = 'Sets up file generator in your xcproject build phases. Whenewer you run a buld, new image names will be created'
+  c.action do |_args, options|
+    Redbreast::ErrorHandler.rescuable do
+      Redbreast::Command::ConfigurationInstaller.init
+    end
+  end
+end
