@@ -45,7 +45,7 @@ module Redbreast
             .split(/[^0-9a-zA-Z]/)
             .reject { |c| c.empty? }
             .each_with_index
-            .map { |value, index| index == 0 ? value.downcase : value.capitalize }
+            .map { |value, index| index == 0 ? value.tap { |char| char[0] = char[0].downcase } : value.capitalize }
             .join
   
           escaped_underscore = escape_with_underscore_if_needed(clean_name)

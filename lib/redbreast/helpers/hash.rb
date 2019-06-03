@@ -1,9 +1,8 @@
-
 module Redbreast
     module Helper
-        module Hash
-            def compact
-            delete_if { |k, v| v.nil? }
+        module HashHelper
+            def compact(dictionary)
+                dictionary.delete_if { |k, v| v.nil? }
             end
         end
     end

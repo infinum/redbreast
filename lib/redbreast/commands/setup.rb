@@ -6,7 +6,7 @@ module Redbreast
       class Setup
         include Helper::Terminal
         include Helper::General
-        include Helper::Hash
+        include Helper::HashHelper
   
         def self.init(options = Commander::Command::Options.new)
           new(options).call
@@ -24,14 +24,15 @@ module Redbreast
             assets_search_path = assets_search_path_prompt(bundle)
             output_source_path = images_sources_path_prompt(bundle, language)
             include_tests = create_tests_path_prompt?(bundle)
-            {
+            fields = {
                 name: bundle,
                 reference: reference,
                 assetsSearchPath: assets_search_path,
                 outputSourcePath: output_source_path,
                 outputTestPath: include_tests ? tests_path_prompt(bundle, language) : nil,
                 testableImport: include_tests ? testable_import_prompt(bundle, language) : nil
-            }.compact
+            }
+            compact fields
           end
           config = {
             language: language,
