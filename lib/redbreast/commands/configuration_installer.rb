@@ -27,8 +27,9 @@ module Redbreast
         end
 
         def configure_target(target)
+            puts target.build_phases.class
             phase = target.new_shell_script_build_phase("Redbreast generate")
-            phase.shell_script = "redbreast generate"
+            phase.shell_script = "PATH=$PATH:~/.rbenv/shims\nredbreast generate"
         end
 
       end
