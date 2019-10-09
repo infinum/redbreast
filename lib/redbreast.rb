@@ -18,6 +18,7 @@ require "redbreast/io/config"
 
 # Crawlers
 require "redbreast/crawlers/image_crawler"
+require "redbreast/crawlers/color_crawler"
 
 # Serializers
 require 'redbreast/serializers/serializer'
