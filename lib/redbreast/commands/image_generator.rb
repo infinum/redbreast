@@ -17,9 +17,8 @@ module Redbreast
         private
   
         def generate_image_sources(bundles, programming_language)
-            bundles.each do |bundle|
+          bundles.each do |bundle|
             image_names = pull_asset_names(bundle[:assetsSearchPath])
-            
             write_images(image_names, bundle, programming_language)
           end
         end
@@ -27,7 +26,7 @@ module Redbreast
         # Serializing data
   
         def write_images(image_names, bundle, programming_language)
-          output_path = bundle[:outputSourcePath]
+          output_path = bundle[:outputSourcePathImages]
           return if output_path.to_s.empty?
           case programming_language.downcase
           when "objc"
@@ -37,7 +36,7 @@ module Redbreast
             serializer = Redbreast::Serializer::Swift
             template_generator = Redbreast::TemplateGenerator::Image::Swift
           end
-          serializer.new(image_names, bundle).save(output_path, template_generator.new)
+          serializer.new(image_names, nil, bundle).save(output_path, template_generator.new)
         end
   
         # Pulling data

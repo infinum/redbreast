@@ -22,13 +22,15 @@ module Redbreast
           bundles = bundle_names.map do |bundle| 
             reference = bundle_reference(bundle, language)
             assets_search_path = assets_search_path_prompt(bundle)
-            output_source_path = images_sources_path_prompt(bundle, language)
+            output_source_path_images = images_sources_path_prompt(bundle, language)
+            output_source_path_colors = colors_sources_path_prompt(bundle, language)
             include_tests = create_tests_path_prompt?(bundle)
             fields = {
                 name: bundle,
                 reference: reference,
                 assetsSearchPath: assets_search_path,
-                outputSourcePath: output_source_path,
+                outputSourcePathImages: output_source_path_images,
+                outputSourcePathColors: output_source_path_colors,
                 outputTestPath: include_tests ? tests_path_prompt(bundle, language) : nil,
                 testableImport: include_tests ? testable_import_prompt(bundle, language) : nil
             }

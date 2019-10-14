@@ -3,9 +3,12 @@ module Redbreast
         class Base
           include ERB::Util
           attr_accessor :image_names, :bundle
+          attr_accessor :color_names, :bundle
+
   
-          def initialize(image_names, bundle)
+          def initialize(image_names, color_names, bundle)
             @image_names = image_names
+            @color_names = color_names
             @bundle = bundle
           end
   

@@ -10,6 +10,7 @@ require "redbreast/helpers/hash"
 # Commands
 require "redbreast/commands/setup"
 require "redbreast/commands/image_generator"
+require "redbreast/commands/color_generator"
 require "redbreast/commands/test_generator"
 require "redbreast/commands/configuration_installer"
 
@@ -30,6 +31,8 @@ require 'redbreast/template_generators/objc_template_generator'
 require 'redbreast/template_generators/swift_template_generator'
 require 'redbreast/template_generators/images/objc_images_template_generator'
 require 'redbreast/template_generators/images/swift_images_template_generator'
+require 'redbreast/template_generators/colors/objc_colors_template_generator'
+require 'redbreast/template_generators/colors/swift_colors_template_generator'
 require 'redbreast/template_generators/tests/objc_tests_template_generator'
 require 'redbreast/template_generators/tests/swift_tests_template_generator'
 
