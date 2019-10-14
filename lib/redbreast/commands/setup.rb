@@ -88,6 +88,17 @@ module Redbreast
           end
         end
 
+        # Colors source path
+
+        def colors_sources_path_prompt(bundle, language)
+          case language
+          when "objc"
+            prompt.ask("Where would you like to store colors resources files for bundle #{bundle}?", default: './Common/Categories/Colors')
+          when "swift"
+            prompt.ask("Where would you like to store colors resources files for bundle #{bundle}?", default: './Common/Extensions/UIColorExtension.swift')
+          end
+        end
+
         # Tests
 
         def create_tests_path_prompt?(bundle)
