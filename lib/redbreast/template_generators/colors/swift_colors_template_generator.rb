@@ -10,7 +10,7 @@ module Redbreast
 import UIKit
 <% 
 def app_name(app_name)
-  "Jaco"
+    app_name
 end
 %>
 
@@ -21,7 +21,7 @@ extension UIColor {
 
 extension UIColor.<%= app_name("a") %> {
 
-<%= gen(color_names, "\t", "") %>    
+<%= generate_file(color_names, "\t", "") %>    
 }
 TEMPLATE
                 end
