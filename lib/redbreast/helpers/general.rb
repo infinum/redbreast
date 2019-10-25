@@ -19,6 +19,10 @@ module Redbreast
         def bundles
           @bundles ||= config[:bundles]
         end
+
+        def app_name
+          @app_name ||= config[:app_name]
+        end
   
         def indent(level = 0, initial = "")
           (1..level)
@@ -62,7 +66,7 @@ module Redbreast
           "`#{name}`"
         end
 
-        def generate_file(color_names, spacing, previous_level)
+        def generate_file(color_names, spacing, previous_level, variable_declaration, variable_type, variable_end)
           return if color_names.empty?
           text = ""
           arr = []
@@ -74,11 +78,9 @@ module Redbreast
                   arr.push(temp_arr.first)
               else
                   name_prefix = previous_level.empty? ? "" : "/"
-                  if name == color_names.last
-                      text += spacing + "static var " + clean_variable_name(name) + ": UIColor { return UIColor(named: \"" + previous_level + name_prefix + name + "\")! }"
-                  else
-                      text += spacing + "static var " + clean_variable_name(name) + ": UIColor { return UIColor(named: \"" + previous_level + name_prefix + name + "\")! }" + "\n"
-                  end
+
+                  text += spacing + variable_declaration + clean_variable_name(name) + variable_type + previous_level + name_prefix + name + variable_end
+                  text += name == color_names.last ? "" : "\n"
               end
           end
       
@@ -89,8 +91,8 @@ module Redbreast
               color_names_new_struct = []
               new_struct_name = struct_name
       
-              text = text.empty? ? text : text + "\n" 
-              text += spacing + "struct " + struct_name + " {"
+              text += previous_level.empty? ? "\n" : ""
+              text += "\n" + spacing + "struct " + struct_name + " {"
               
               color_names.each do |name|
                   temp_arr = name.split("/")
@@ -112,20 +114,24 @@ module Redbreast
               if !color_names_new_struct.empty? && new_struct_name == struct_name
                  
                   previous_level += previous_level.empty? ? "" : "/"
-                  text += "\n\n" + generate_file(color_names_new_struct, spacing + "\t", previous_level + struct_name)
+                  text += "\n" + generate_file(color_names_new_struct, spacing + "\t", previous_level + struct_name, variable_declaration, variable_type, variable_end)
                   color_names_new_struct = []
               end
       
               if color_names_new.length != 0
                   previous_level += previous_level.empty? ? "" : "/"
                   
-                  text += "\n" + generate_file(color_names_new, spacing + "\t", previous_level + struct_name)
+                  text += "\n" + generate_file(color_names_new, spacing + "\t", previous_level + struct_name, variable_declaration, variable_type, variable_end)
               end
       
               text += "\n" +  spacing  + "}" + "\n"
           end
           return text
-      end
+        end
+
+        def application_name(app_name)
+          return app_name
+        end
   
       end
     end

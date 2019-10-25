@@ -18,6 +18,7 @@ module Redbreast
   
         def call
           language = language_prompt
+          app_name = app_name_prompt
           bundle_names = bundle_names_prompt(language).split(" ")
           bundles = bundle_names.map do |bundle| 
             reference = bundle_reference(bundle, language)
@@ -38,7 +39,8 @@ module Redbreast
           end
           config = {
             language: language,
-            bundles: bundles
+            bundles: bundles,
+            app_name: app_name
           }
           Redbreast::IO::Config.write(config)
           success
@@ -125,6 +127,11 @@ module Redbreast
           end
         end
 
+        # Application name propmt
+
+        def app_name_prompt
+          prompt.ask('Please enter application name', default: "Application")
+        end
       end
     end
   end

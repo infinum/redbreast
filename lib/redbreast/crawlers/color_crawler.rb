@@ -28,7 +28,6 @@ module Redbreast
                   }
                 end 
 
-                puts current_color_name
                 current_color_name.split(".xcassets/")[-1].chomp(".colorset")
               }
             }

@@ -5,7 +5,30 @@ module Redbreast
       def self.image_names_uniq(assets_search_path)
         Dir.glob(assets_search_path).flat_map { |asset_folder|
             Dir.glob("#{asset_folder}/**/*.imageset").map { |image_name|
-                image_name.split("/")[-1].chomp(".imageset")
+            name_to_split = image_name
+            split_name = name_to_split.split(".xcassets/")
+            current_image_name = split_name[0] + ".xcassets/"
+            current_iterating_name = split_name[0] + ".xcassets/"
+
+            for folder in split_name[1].split("/") do 
+              if folder.include?  ".imageset"
+                current_image_name += folder
+                next
+              end
+
+              current_iterating_name += folder + "/"
+
+              Dir.glob("#{current_iterating_name}*.json").map { |path_name|
+                File.open path_name do |file|
+                    if !file.find { |line| line =~ /provides/ }.nil?
+                      current_image_name += folder + "/"
+                      next
+                    end
+                end
+              }
+            end 
+
+            current_image_name.split(".xcassets/")[-1].chomp(".imageset")
             }
           }
           .uniq
