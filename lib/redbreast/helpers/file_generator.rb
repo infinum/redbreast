@@ -1,5 +1,5 @@
 module Redbreast
-    module TemplateGenerator
+    module Helper
         class FileGenerator
 
             def generate_file(color_names, spacing, previous_level)
@@ -15,9 +15,9 @@ module Redbreast
                     else
                         name_prefix = previous_level.empty? ? "" : "/"
                         if name == color_names.last
-                            text += spacing + 'static var ' + clean_variable_name(name) + ': UIColor { return UIColor(named: "' + previous_level + name_prefix + name + '")! }'
+                            text += spacing + "static var " + clean_variable_name(name) + ": UIColor { return UIColor(named: \"" + previous_level + name_prefix + name + "\")! }"
                         else
-                            text += spacing + 'static var ' + clean_variable_name(name) + ': UIColor { return UIColor(named: "' + previous_level + name_prefix + name + '")! }' + "\n"
+                            text += spacing + "static var " + clean_variable_name(name) + ": UIColor { return UIColor(named: \"" + previous_level + name_prefix + name + "\")! }" + "\n"
                         end
                     end
                 end
@@ -30,7 +30,7 @@ module Redbreast
                     new_struct_name = struct_name
             
                     text = text.empty? ? text : text + "\n" 
-                    text += spacing + 'struct ' + struct_name + ' {'
+                    text += spacing + "struct " + struct_name + " {"
                     
                     color_names.each do |name|
                         temp_arr = name.split("/")
@@ -62,7 +62,7 @@ module Redbreast
                         text += "\n" + test(color_names_new, spacing + "\t", previous_level + struct_name)
                     end
             
-                    text += "\n" +  spacing  + '}' + "\n"
+                    text += "\n" +  spacing  + "}" + "\n"
                 end
                 return text
             end
