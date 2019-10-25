@@ -85,13 +85,12 @@ module Redbreast
           end
       
           arr = arr.uniq
-      
+          text += previous_level.empty? ? "\n" : ""
           arr.each do |struct_name|
               color_names_new = []
               color_names_new_struct = []
               new_struct_name = struct_name
       
-              text += previous_level.empty? ? "\n" : ""
               text += "\n" + spacing + "struct " + struct_name + " {"
               
               color_names.each do |name|
