@@ -1,6 +1,5 @@
-
 require_relative '../swift_template_generator'
-require 'file_generator'
+require_relative 'file_generator'
 
 module Redbreast
     module TemplateGenerator

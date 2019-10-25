@@ -6,7 +6,6 @@ require "erb"
 require "redbreast/helpers/terminal"
 require "redbreast/helpers/general"
 require "redbreast/helpers/hash"
-require "redbreast/helpers/file_generator"
 
 # Commands
 require "redbreast/commands/setup"
@@ -36,6 +35,7 @@ require 'redbreast/template_generators/colors/objc_colors_template_generator'
 require 'redbreast/template_generators/colors/swift_colors_template_generator'
 require 'redbreast/template_generators/tests/objc_tests_template_generator'
 require 'redbreast/template_generators/tests/swift_tests_template_generator'
+require "redbreast/template_generators/colors/file_generator"
 
 # Error Handler
 require "redbreast/error_handler"

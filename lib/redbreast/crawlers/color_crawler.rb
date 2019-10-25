@@ -5,7 +5,6 @@ module Redbreast
         def self.color_names_uniq(assets_search_path)
           Dir.glob(assets_search_path).flat_map { |asset_folder|
               Dir.glob("#{asset_folder}/**/*.colorset").map { |color_name|
-
                 name_to_split = color_name
                 split_name = name_to_split.split(".xcassets/")
                 current_color_name = split_name[0] + ".xcassets/"
