@@ -1,8 +1,8 @@
 module Redbreast
     module Helper
-        class FileGenerator
+        module Gen
 
-            def generate_file(color_names, spacing, previous_level)
+            def gen(color_names, spacing, previous_level)
                 return if color_names.empty?
                 text = ""
                 arr = []

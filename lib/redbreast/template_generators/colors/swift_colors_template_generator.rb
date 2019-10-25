@@ -21,7 +21,7 @@ extension UIColor {
 
 extension UIColor.<%= app_name("a") %> {
 
-<%= generate_file(color_names, "\t", "") %>    
+<%= gen(color_names, "\t", "") %>    
 }
 TEMPLATE
                 end
