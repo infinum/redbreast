@@ -6,6 +6,7 @@ require "erb"
 require "redbreast/helpers/terminal"
 require "redbreast/helpers/general"
 require "redbreast/helpers/hash"
+require "redbreast/helpers/file_generator"
 
 # Commands
 require "redbreast/commands/setup"
