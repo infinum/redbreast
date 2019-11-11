@@ -130,7 +130,7 @@ module Redbreast
         # Application name propmt
 
         def app_name_prompt
-          prompt.ask('Please enter application name', default: "Application")
+          prompt.ask('Please enter application name')
         end
       end
     end
