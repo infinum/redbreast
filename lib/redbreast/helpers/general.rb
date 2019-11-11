@@ -66,7 +66,7 @@ module Redbreast
           "`#{name}`"
         end
 
-        def generate_file(names, spacing, previous_level, variable_declaration, variable_type, variable_end)
+        def generate_file_swift(names, spacing, previous_level, variable_declaration, variable_type, variable_end)
           return if names.empty?
           text = ""
           arr = []
@@ -138,7 +138,41 @@ module Redbreast
 
           return text
         end
-  
+
+        def generate_m_file_objc(names, variable_declaration, variable_type, variable_end, bundle_name, last_part)
+          text = ""
+
+          names.each do |name|
+            temp_arr = name.split("/")
+            variable_name = temp_arr.length == 1 ? clean_variable_name(name) : temp_arr.join("")
+            text += variable_declaration + variable_name + variable_type + name + variable_end + bundle_name[:reference] + last_part
+            text += name == names.last ? "" : "\n"
+          end
+
+          return text
+        end
+
+        def generate_h_file_objc(names, variable_declaration, variable_end)
+          text = ""
+
+          names.each do |name|
+            temp_arr = name.split("/")
+            variable_name = temp_arr.length == 1 ? clean_variable_name(name) : temp_arr.join("")
+            text += variable_declaration + variable_name +  variable_end + "\n"
+          end
+
+          return text
+        end
+
+        def generate_category(type, class_name, app_name)
+          text = "@" + type + " " + class_name + " ("
+          
+          if app_name.nil? || app_name.empty?
+            return text += "Extensions)\n"
+          end 
+
+          return text += app_name + ")\n"
+        end
       end
     end
   end
