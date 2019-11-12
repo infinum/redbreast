@@ -9,6 +9,7 @@ module Redbreast
         end
   
         def call
+          return if bundles.first[:outputSourcePathColors].nil?
           prompt.say("Generating color resources...")
           generate_color_sources(bundles, programming_language, app_name)
           success("Color resources generated!")

@@ -113,14 +113,14 @@ module Redbreast
               if !names_new_struct.empty? && new_struct_name == struct_name
                  
                   previous_level += previous_level.empty? ? "" : "/"
-                  text += "\n" + generate_file(names_new_struct, spacing + "\t", previous_level + struct_name, variable_declaration, variable_type, variable_end)
+                  text += "\n" + generate_file_swift(names_new_struct, spacing + "\t", previous_level + struct_name, variable_declaration, variable_type, variable_end)
                   names_new_struct = []
               end
       
               if names_new.length != 0
                   previous_level += previous_level.empty? ? "" : "/"
                   
-                  text += "\n" + generate_file(names_new, spacing + "\t", previous_level + struct_name, variable_declaration, variable_type, variable_end)
+                  text += "\n" + generate_file_swift(names_new, spacing + "\t", previous_level + struct_name, variable_declaration, variable_type, variable_end)
               end
       
               text += "\n" +  spacing  + "}" + "\n"
@@ -144,7 +144,7 @@ module Redbreast
 
           names.each do |name|
             temp_arr = name.split("/")
-            variable_name = temp_arr.length == 1 ? clean_variable_name(name) : temp_arr.join("")
+            variable_name = temp_arr.length == 1 ? clean_variable_name(name) : temp_arr.unshift(temp_arr.shift.downcase).join("")
             text += variable_declaration + variable_name + variable_type + name + variable_end + bundle_name[:reference] + last_part
             text += name == names.last ? "" : "\n"
           end
@@ -157,7 +157,8 @@ module Redbreast
 
           names.each do |name|
             temp_arr = name.split("/")
-            variable_name = temp_arr.length == 1 ? clean_variable_name(name) : temp_arr.join("")
+            
+            variable_name = temp_arr.length == 1 ? clean_variable_name(name) : temp_arr.unshift(temp_arr.shift.downcase).join("")
             text += variable_declaration + variable_name +  variable_end + "\n"
           end
 
@@ -168,7 +169,7 @@ module Redbreast
           text = "@" + type + " " + class_name + " ("
           
           if app_name.nil? || app_name.empty?
-            return text += "Extensions)\n"
+            return text += "Common)\n"
           end 
 
           return text += app_name + ")\n"

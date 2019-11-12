@@ -9,6 +9,7 @@ module Redbreast
         end
   
         def call
+          return if bundles.first[:outputSourcePathImages].nil?
           prompt.say("Generating image resources...")
           generate_image_sources(bundles, programming_language, app_name)
           success("Image resources generated!")

@@ -20,11 +20,12 @@ module Redbreast
           language = language_prompt
           app_name = app_name_prompt
           bundle_names = bundle_names_prompt(language).split(" ")
+          assets_types = assets_types_prompt
           bundles = bundle_names.map do |bundle| 
             reference = bundle_reference(bundle, language)
             assets_search_path = assets_search_path_prompt(bundle)
-            output_source_path_images = images_sources_path_prompt(bundle, language)
-            output_source_path_colors = colors_sources_path_prompt(bundle, language)
+            output_source_path_images = assets_types == 1 ? nil : images_sources_path_prompt(bundle, language)
+            output_source_path_colors = assets_types == 0 ? nil : colors_sources_path_prompt(bundle, language)
             include_tests = create_tests_path_prompt?(bundle)
             fields = {
                 name: bundle,
@@ -131,6 +132,13 @@ module Redbreast
 
         def app_name_prompt
           prompt.ask('Please enter application name')
+        end
+
+        # Assets type prompt
+
+        def assets_types_prompt
+          types = {'Images' => 0, 'Colors' => 1, 'Both' => 2}
+          prompt.select('Choose a type: ', types)
         end
       end
     end
