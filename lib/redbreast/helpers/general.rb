@@ -66,7 +66,7 @@ module Redbreast
           "`#{name}`"
         end
 
-        def generate_file_swift(names, spacing, previous_level, variable_declaration, variable_type, variable_end)
+        def generate_file_swift(names, spacing, previous_level, variable_declaration, variable_type, variable_end, bundle, last_part)
           return if names.empty?
           text = ""
           arr = []
@@ -79,19 +79,19 @@ module Redbreast
               else
                   name_prefix = previous_level.empty? ? "" : "/"
 
-                  text += spacing + variable_declaration + clean_variable_name(name) + variable_type + previous_level + name_prefix + name + variable_end
+                  text += spacing + variable_declaration + clean_variable_name(name) + variable_type + previous_level + name_prefix + name + variable_end + bundle_name[:reference] + last_part
                   text += name == names.last ? "" : "\n"
               end
           end
       
           arr = arr.uniq
           text += previous_level.empty? ? "\n" : ""
-          arr.each do |struct_name|
+          arr.each do |enum_name|
               names_new = []
-              names_new_struct = []
-              new_struct_name = struct_name
+              names_new_enum = []
+              new_enum_name = enum_name
       
-              text += "\n" + spacing + "struct " + struct_name + " {"
+              text += "\n" + spacing + "enum " + enum_name + " {"
               
               names.each do |name|
                   temp_arr = name.split("/")
@@ -99,28 +99,28 @@ module Redbreast
                   if temp_arr.length == 1
                       next
                   elsif temp_arr.length > 2
-                      if temp_arr.first == new_struct_name
-                          names_new_struct.push(temp_arr.drop(1).join("/"))
+                      if temp_arr.first == new_enum_name
+                          names_new_enum.push(temp_arr.drop(1).join("/"))
                       end
                       next
                   end
       
-                  if temp_arr[0] == struct_name
+                  if temp_arr[0] == enum_name
                       names_new.push(temp_arr.drop(1).join("/"))
                   end
               end
       
-              if !names_new_struct.empty? && new_struct_name == struct_name
+              if !names_new_enum.empty? && new_enum_name == enum_name
                  
                   previous_level += previous_level.empty? ? "" : "/"
-                  text += "\n" + generate_file_swift(names_new_struct, spacing + "\t", previous_level + struct_name, variable_declaration, variable_type, variable_end)
-                  names_new_struct = []
+                  text += "\n" + generate_file_swift(names_new_enum, spacing + "\t", previous_level + enum_name, variable_declaration, variable_type, variable_end)
+                  names_new_enum = []
               end
       
               if names_new.length != 0
                   previous_level += previous_level.empty? ? "" : "/"
                   
-                  text += "\n" + generate_file_swift(names_new, spacing + "\t", previous_level + struct_name, variable_declaration, variable_type, variable_end)
+                  text += "\n" + generate_file_swift(names_new, spacing + "\t", previous_level + enum_name, variable_declaration, variable_type, variable_end)
               end
       
               text += "\n" +  spacing  + "}" + "\n"
@@ -134,7 +134,7 @@ module Redbreast
           if app_name.nil? || app_name.empty?
             return text
           end
-          text += "\tstruct " + app_name + " {}\n}\n\nextension " + extended_class + "." + app_name + " {\n" 
+          text += "\tenum " + app_name + " {}\n}\n\nextension " + extended_class + "." + app_name + " {\n" 
 
           return text
         end
