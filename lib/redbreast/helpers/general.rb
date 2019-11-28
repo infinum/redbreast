@@ -79,7 +79,7 @@ module Redbreast
               else
                   name_prefix = previous_level.empty? ? "" : "/"
 
-                  text += spacing + variable_declaration + clean_variable_name(name) + variable_type + previous_level + name_prefix + name + variable_end + bundle_name[:reference] + last_part
+                  text += spacing + variable_declaration + clean_variable_name(name) + variable_type + previous_level + name_prefix + name + variable_end + bundle[:reference] + last_part
                   text += name == names.last ? "" : "\n"
               end
           end
@@ -113,14 +113,14 @@ module Redbreast
               if !names_new_enum.empty? && new_enum_name == enum_name
                  
                   previous_level += previous_level.empty? ? "" : "/"
-                  text += "\n" + generate_file_swift(names_new_enum, spacing + "\t", previous_level + enum_name, variable_declaration, variable_type, variable_end)
+                  text += "\n" + generate_file_swift(names_new_enum, spacing + "\t", previous_level + enum_name, variable_declaration, variable_type, variable_end, bundle, last_part)
                   names_new_enum = []
               end
       
               if names_new.length != 0
                   previous_level += previous_level.empty? ? "" : "/"
                   
-                  text += "\n" + generate_file_swift(names_new, spacing + "\t", previous_level + enum_name, variable_declaration, variable_type, variable_end)
+                  text += "\n" + generate_file_swift(names_new, spacing + "\t", previous_level + enum_name, variable_declaration, variable_type, variable_end, bundle, last_part)
               end
       
               text += "\n" +  spacing  + "}" + "\n"
