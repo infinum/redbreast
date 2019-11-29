@@ -33,8 +33,10 @@ require 'redbreast/template_generators/images/objc_images_template_generator'
 require 'redbreast/template_generators/images/swift_images_template_generator'
 require 'redbreast/template_generators/colors/objc_colors_template_generator'
 require 'redbreast/template_generators/colors/swift_colors_template_generator'
-require 'redbreast/template_generators/tests/objc_tests_template_generator'
-require 'redbreast/template_generators/tests/swift_tests_template_generator'
+require 'redbreast/template_generators/tests/objc_colors_tests_template_generator'
+require 'redbreast/template_generators/tests/objc_images_tests_template_generator'
+require 'redbreast/template_generators/tests/swift_colors_tests_template_generator'
+require 'redbreast/template_generators/tests/swift_images_tests_template_generator'
 
 # Error Handler
 require "redbreast/error_handler"
