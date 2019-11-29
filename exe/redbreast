@@ -26,7 +26,8 @@ command :generate do |c|
     Redbreast::ErrorHandler.rescuable do
       Redbreast::Command::ColorGenerator.init
       Redbreast::Command::ImageGenerator.init
-      Redbreast::Command::TestGenerator.init
+      Redbreast::Command::ColorTestGenerator.init
+      Redbreast::Command::ImageTestGenerator.init
     end
   end
 end

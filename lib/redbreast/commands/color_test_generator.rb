@@ -1,6 +1,6 @@
 module Redbreast
     module Command
-      class TestGenerator
+      class ColorTestGenerator
         include Helper::Terminal
         include Helper::General
   
@@ -12,9 +12,9 @@ module Redbreast
           filtered_bundles = bundles.select { |bundle| bundle[:outputTestPathColors] }
           return if filtered_bundles.empty?
 
-          prompt.say("Generating test resources...")
+          prompt.say("Generating color test resources...")
           generate_test_sources(bundles, programming_language, app_name)
-          success("Test resources generated!")
+          success("Color test resources generated!")
         end
   
         private
@@ -40,7 +40,7 @@ module Redbreast
             serializer = Redbreast::Serializer::Swift
             template_generator = Redbreast::TemplateGenerator::Test::Swift
           end
-          serializer.new(nil, color_names, bundle, app_name).save(output_path, template_generator.new)
+          serializer.new(color_names, bundle, app_name).save(output_path, template_generator.new)
         end
   
         # Pulling data

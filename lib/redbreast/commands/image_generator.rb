@@ -37,7 +37,7 @@ module Redbreast
             serializer = Redbreast::Serializer::Swift
             template_generator = Redbreast::TemplateGenerator::Image::Swift
           end
-          serializer.new(image_names, nil, bundle, app_name).save(output_path, template_generator.new)
+          serializer.new(image_names, bundle, app_name).save(output_path, template_generator.new)
         end
   
         # Pulling data

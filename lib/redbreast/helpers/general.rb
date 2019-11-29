@@ -129,7 +129,7 @@ module Redbreast
         end
 
         def generate_extension(extended_class, app_name)
-          text = "extension " +extended_class + " {\n"
+          text = "extension " + extended_class + " {\n"
 
           if app_name.nil? || app_name.empty?
             return text
@@ -182,10 +182,9 @@ module Redbreast
             temp_array = name.split("/")
             variable = temp_array.pop
             additional_text = temp_array.count == 0 ? "" : "."
-            text += "\t\t" + variable_declaration + app_name_text + temp_arr.join(".") + additional_text + clean_variable_name(variable)
+            text += "\t\t" + variable_declaration + app_name_text + temp_array.join(".") + additional_text + clean_variable_name(variable)
             text += name == names.last ? "" : "\n"
           end
-          
           return text
         end
 

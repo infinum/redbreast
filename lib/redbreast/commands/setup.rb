@@ -26,9 +26,9 @@ module Redbreast
             assets_search_path = assets_search_path_prompt(bundle)
             output_source_path_images = assets_types == 1 ? nil : images_sources_path_prompt(bundle, language)
             output_source_path_colors = assets_types == 0 ? nil : colors_sources_path_prompt(bundle, language)
-            output_test_path_images = assets_types == 1 && include_tests ? images_tests_path_prompt(bundle, language) : nil
-            output_test_path_colors = assets_types == 0 && include_tests ? colors_tests_path_prompt(bundle, language) : nil
             include_tests = create_tests_path_prompt?(bundle)
+            output_test_path_images = assets_types != 1 && include_tests ? images_tests_path_prompt(bundle, language) : nil
+            output_test_path_colors = assets_types != 0 && include_tests ? colors_tests_path_prompt(bundle, language) : nil
             fields = {
                 name: bundle,
                 reference: reference,

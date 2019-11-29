@@ -24,7 +24,7 @@ module Redbreast
 
 - (void)testExample 
 {
-<%= create_objc_test_cases(image_names, '[UIImage ', '];')%>
+<%= create_objc_test_cases(asset_names, '[UIImage ', '];')%>
 }
 
 @end

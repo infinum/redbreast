@@ -16,7 +16,7 @@ import UIKit
 class <%= File.basename(bundle[:outputTestPathColors], ".*") %>: XCTestCase {
 
     func testIfColorsArePresent() {
-<%= create_swift_test_cases(color_names, '_ = UIColor.',  app_name) %>
+<%= create_swift_test_cases(asset_names, '_ = UIColor.', app_name) %>
     }
 
 }
