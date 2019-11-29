@@ -26,6 +26,8 @@ module Redbreast
             assets_search_path = assets_search_path_prompt(bundle)
             output_source_path_images = assets_types == 1 ? nil : images_sources_path_prompt(bundle, language)
             output_source_path_colors = assets_types == 0 ? nil : colors_sources_path_prompt(bundle, language)
+            output_test_path_images = assets_types == 1 && include_tests ? images_tests_path_prompt(bundle, language) : nil
+            output_test_path_colors = assets_types == 0 && include_tests ? colors_tests_path_prompt(bundle, language) : nil
             include_tests = create_tests_path_prompt?(bundle)
             fields = {
                 name: bundle,
@@ -33,7 +35,8 @@ module Redbreast
                 assetsSearchPath: assets_search_path,
                 outputSourcePathImages: output_source_path_images,
                 outputSourcePathColors: output_source_path_colors,
-                outputTestPath: include_tests ? tests_path_prompt(bundle, language) : nil,
+                outputTestPathImages: output_test_path_images,
+                outputTestPathColors: output_test_path_colors,
                 testableImport: include_tests ? testable_import_prompt(bundle, language) : nil
             }
             compact fields
@@ -110,12 +113,21 @@ module Redbreast
           prompt.yes?("Would you like to create tests for bundle #{bundle}?")
         end
 
-        def tests_path_prompt(bundle, language)
+        def images_tests_path_prompt(bundle, language)
           case language
           when "objc"
             prompt.ask("Where would you like to store tests for bundle #{bundle}?", default: './Common/Categories/ImagesTest')
           when "swift"
             prompt.ask("Where would you like to store tests for bundle #{bundle}?", default: './Common/Extensions/UIImageExtensionTest.swift')
+          end
+        end
+
+        def colors_tests_path_prompt(bundle, language)
+          case language
+          when "objc"
+            prompt.ask("Where would you like to store tests for bundle #{bundle}?", default: './Common/Categories/ColorsTest')
+          when "swift"
+            prompt.ask("Where would you like to store tests for bundle #{bundle}?", default: './Common/Extensions/UIColorExtensionTest.swift')
           end
         end
 

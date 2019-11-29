@@ -1,4 +1,4 @@
-require_relative '../objc_template_generator'
+require 'redbreast/template_generators/objc_template_generator'
 
 module Redbreast
     module TemplateGenerator
@@ -14,18 +14,17 @@ module Redbreast
 <<-TEMPLATE
 
 #import <XCTest/XCTest.h>
-#import <"UIImage+<%= File.basename(bundle[:outputSourcePath]) %>.h">
+#import "UIImage+<%= app_name.nil? ? "Common" : app_name %>.h"
 
-@interface <%= File.basename(bundle[:outputTestPath]) %> : XCTestCase
+@interface <%= File.basename(bundle[:outputTestPathImages]) %> : XCTestCase
 
 @end
 
 @implementation Test
 
-- (void)testExample {
-    <%- image_names.each do |name| -%>
-    [UIImage clean_variable_name(name)];
-    <%- end -%>
+- (void)testExample 
+{
+<%= create_objc_test_cases(image_names, '[UIImage ', '];')%>
 }
 
 @end

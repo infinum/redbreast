@@ -157,7 +157,6 @@ module Redbreast
 
           names.each do |name|
             temp_arr = name.split("/")
-            
             variable_name = temp_arr.length == 1 ? clean_variable_name(name) : temp_arr.unshift(temp_arr.shift.downcase).join("")
             text += variable_declaration + variable_name +  variable_end + "\n"
           end
@@ -174,6 +173,35 @@ module Redbreast
 
           return text += app_name + ")\n"
         end
+
+        def create_swift_test_cases(names, variable_declaration, app_name)
+          text = ""
+          app_name_text = app_name.nil? || app_name.empty? ? "" : app_name + "."
+
+          names.each do |name|  
+            temp_array = name.split("/")
+            variable = temp_array.pop
+            additional_text = temp_array.count == 0 ? "" : "."
+            text += "\t\t" + variable_declaration + app_name_text + temp_arr.join(".") + additional_text + clean_variable_name(variable)
+            text += name == names.last ? "" : "\n"
+          end
+          
+          return text
+        end
+
+        def create_objc_test_cases(names, variable_declaration, variable_end)
+          text = ""
+
+          names.each do |name|  
+            temp_array = name.split("/")
+            variable_name = temp_array.length == 1 ? clean_variable_name(name) : temp_array.unshift(temp_array.shift.downcase).join("")
+            text += "\t" + variable_declaration + variable_name + variable_end
+            text += name == names.last ? "" : "\n"
+          end
+          
+          return text
+        end
+
       end
     end
   end

@@ -11,7 +11,8 @@ require "redbreast/helpers/hash"
 require "redbreast/commands/setup"
 require "redbreast/commands/image_generator"
 require "redbreast/commands/color_generator"
-require "redbreast/commands/test_generator"
+require "redbreast/commands/image_test_generator"
+require "redbreast/commands/color_test_generator"
 require "redbreast/commands/configuration_installer"
 
 # File Accessors
