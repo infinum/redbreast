@@ -1,4 +1,4 @@
-require 'bundler/setup'
+require 'bundler/setup' # frozen_string_literal: true
 require 'redbreast'
 
 RSpec.configure do |config|

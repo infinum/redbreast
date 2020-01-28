@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'spec_helper' # frozen_string_literal: true
 
 RSpec.describe Redbreast do
   it 'has a version number' do

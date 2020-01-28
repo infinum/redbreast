@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 module Redbreast
   module Serializer
+    # Used for initializing a serializer which will save files for respective languages
     class Base
       include ERB::Util
       attr_accessor :asset_names, :bundle
@@ -10,10 +13,9 @@ module Redbreast
         @app_name = app_name
       end
 
-      def save(path)
-        fail NotImplementedError, 'Abstract Method'
+      def save(*)
+        raise NotImplementedError, 'Abstract Method'
       end
-
     end
   end
 end

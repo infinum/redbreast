@@ -1,7 +1,8 @@
-require_relative 'serializer'
+require_relative 'serializer' # frozen_string_literal: true
 
 module Redbreast
   module Serializer
+    # Used  for saving ObjC files
     class ObjC < Base
       include Helper::General
 
@@ -12,15 +13,17 @@ module Redbreast
         name = app_name.nil? ? 'Common' : app_name
 
         if template_generator.h_template
-          h_file = ERB.new(template_generator.h_template, nil, '-').result(binding)
-          File.write(File.join(output_source_path, "#{file_base_name}+#{name}.h"), h_file)
+          write(output_source_path, template_generator.h_template, "#{file_base_name}+#{name}.h")
         end
 
-        if template_generator.m_template
-          m_file = ERB.new(template_generator.m_template, nil, '-').result(binding)
-          File.write(File.join(output_source_path, "#{file_base_name}+#{name}.m"), m_file)
-        end
+        return unless template_generator.m_template
 
+        write(output_source_path, template_generator.m_template, "#{file_base_name}+#{name}.m")
+      end
+
+      def write(output_source_path, template, file_name)
+        file = ERB.new(template, nil, '-').result(binding)
+        File.write(File.join(output_source_path, file_name), file)
       end
     end
   end

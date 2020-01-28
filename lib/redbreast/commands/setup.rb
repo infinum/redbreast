@@ -1,4 +1,4 @@
-require 'commander/blank'
+require 'commander/blank' # frozen_string_literal: true
 require 'commander/command'
 
 module Redbreast
