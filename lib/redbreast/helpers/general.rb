@@ -7,7 +7,6 @@ module Redbreast
                           'continue', 'default', 'defer', 'do', 'else', 'fallthrough', 'for', 'guard', 'if', 
                           'in', 'repeat', 'return', 'switch', 'where', 'while', 'as', 'Any', 'catch', 'false', 
                           'is', 'nil', 'rethrows', 'super', 'self', 'Self', 'throw', 'throws', 'true', 'try', '_']
-  
       def config
         @config ||= Redbreast::IO::Config.read
       end
@@ -26,16 +25,16 @@ module Redbreast
 
       def indent(level = 0, initial = '')
         (1..level)
-          .to_a.reduce('') { |result, value| result + '    ' }
+          .to_a.reduce('') { |result, _| result + '    ' }
           .concat(initial)
       end
 
       def clean_enum_name(name)
         clean_name = name
-          .split(/[^0-9a-zA-Z]/)
-          .reject { |c| c.empty? }
-          .map { |value| value.capitalize }
-          .join
+                     .split(/[^0-9a-zA-Z]/)
+                     .reject { |c| c.empty? }
+                     .map { |value| value.capitalize }
+                     .join
 
         escape_with_underscore_if_needed(clean_name)
       end
@@ -46,11 +45,11 @@ module Redbreast
 
       def clean_variable_name(name)
         clean_name = name
-          .split(/[^0-9a-zA-Z]/)
-          .reject { |c| c.empty? }
-          .each_with_index
-          .map { |value, index| index == 0 ? value.tap { |char| char[0] = char[0].downcase } : value.capitalize }
-          .join
+                     .split(/[^0-9a-zA-Z]/)
+                     .reject { |c| c.empty? }
+                     .each_with_index
+                     .map { |v, i| i.zero? ? v.tap { |char| char[0] = char[0].downcase } : v.capitalize }
+                     .join
 
         escaped_underscore = escape_with_underscore_if_needed(clean_name)
         escape_keyword_if_needed(escaped_underscore)
@@ -58,74 +57,74 @@ module Redbreast
       
       def escape_with_underscore_if_needed(name)
         return name if name.match(/^[A-Za-z_]/)
+
         '_' + name
       end
 
       def escape_keyword_if_needed(name)
-        return name if !ESCAPE_KEYWORDS.include? name
+        return name unless ESCAPE_KEYWORDS.include? name
+
         "`#{name}`"
       end
 
       def generate_file_swift(names, spacing, previous_level, variable_declaration, variable_type, variable_end, bundle, last_part)
         return if names.empty?
+
         text = ''
         arr = []
-    
-        names.each do |name|
-            temp_arr = name.split('/')
-    
-            if temp_arr.length != 1
-                arr.push(temp_arr.first)
-            else
-                name_prefix = previous_level.empty? ? '' : '/'
 
-                text += spacing + variable_declaration + clean_variable_name(name) + variable_type + previous_level + name_prefix + name + variable_end + bundle[:reference] + last_part
-                text += name == names.last ? '' : '\n'
-            end
+        names.each do |name|
+          temp_arr = name.split('/')
+
+          if temp_arr.length != 1
+            arr.push(temp_arr.first)
+          else
+            name_prefix = previous_level.empty? ? '' : '/'
+
+            text += spacing + variable_declaration + clean_variable_name(name) + variable_type + previous_level + name_prefix + name + variable_end + bundle[:reference] + last_part
+            text += name == names.last ? '' : '\n'
+          end
         end
     
         arr = arr.uniq
         text += previous_level.empty? ? '\n' : ''
         arr.each do |enum_name|
-            names_new = []
+          names_new = []
+          names_new_enum = []
+          new_enum_name = enum_name
+
+          text += '\n' + spacing + 'enum ' + enum_name + ' {'
+
+          names.each do |name|
+            temp_arr = name.split('/')
+
+            next if temp_arr.length == 1
+            if temp_arr.length > 2
+              if temp_arr.first == new_enum_name
+                names_new_enum.push(temp_arr.drop(1).join('/'))
+              end
+              next
+            end
+
+            if temp_arr[0] == enum_name
+              names_new.push(temp_arr.drop(1).join('/'))
+            end
+          end
+  
+          if !names_new_enum.empty? && new_enum_name == enum_name
+            previous_level += previous_level.empty? ? '' : '/'
+            text += '\n' + generate_file_swift(names_new_enum, spacing + '\t', previous_level + enum_name, variable_declaration, variable_type, variable_end, bundle, last_part)
             names_new_enum = []
-            new_enum_name = enum_name
-    
-            text += '\n' + spacing + 'enum ' + enum_name + ' {'
-            
-            names.each do |name|
-                temp_arr = name.split('/')
-                
-                if temp_arr.length == 1
-                    next
-                elsif temp_arr.length > 2
-                    if temp_arr.first == new_enum_name
-                        names_new_enum.push(temp_arr.drop(1).join('/'))
-                    end
-                    next
-                end
-    
-                if temp_arr[0] == enum_name
-                    names_new.push(temp_arr.drop(1).join('/'))
-                end
-            end
-    
-            if !names_new_enum.empty? && new_enum_name == enum_name
-                
-                previous_level += previous_level.empty? ? '' : '/'
-                text += '\n' + generate_file_swift(names_new_enum, spacing + '\t', previous_level + enum_name, variable_declaration, variable_type, variable_end, bundle, last_part)
-                names_new_enum = []
-            end
-    
-            if names_new.length != 0
-                previous_level += previous_level.empty? ? '' : '/'
-                
-                text += '\n' + generate_file_swift(names_new, spacing + '\t', previous_level + enum_name, variable_declaration, variable_type, variable_end, bundle, last_part)
-            end
-    
-            text += '\n' +  spacing  + '}' + '\n'
+          end
+  
+          unless names_new.empty?
+            previous_level += previous_level.empty? ? '' : '/'
+            text += '\n' + generate_file_swift(names_new, spacing + '\t', previous_level + enum_name, variable_declaration, variable_type, variable_end, bundle, last_part)
+          end
+
+          text += '\n' + spacing + '}' + '\n'
         end
-        return text
+        text
       end
 
       def generate_extension(extended_class, app_name)
@@ -134,9 +133,8 @@ module Redbreast
         if app_name.nil? || app_name.empty?
           return text
         end
-        text += '\tenum ' + app_name + ' {}\n}\n\nextension ' + extended_class + '.' + app_name + ' {\n' 
-
-        return text
+        
+        text + '\tenum ' + app_name + ' {}\n}\n\nextension ' + extended_class + '.' + app_name + ' {\n'
       end
 
       def generate_m_file_objc(names, variable_declaration, variable_type, variable_end, bundle_name, last_part)
@@ -149,7 +147,7 @@ module Redbreast
           text += name == names.last ? '' : '\n'
         end
 
-        return text
+        text
       end
 
       def generate_h_file_objc(names, variable_declaration, variable_end)
@@ -158,49 +156,49 @@ module Redbreast
         names.each do |name|
           temp_arr = name.split('/')
           variable_name = temp_arr.length == 1 ? clean_variable_name(name) : temp_arr.unshift(temp_arr.shift.downcase).join('')
-          text += variable_declaration + variable_name +  variable_end + '\n'
+          text += variable_declaration + variable_name + variable_end + '\n'
         end
 
-        return text
+        text
       end
 
       def generate_category(type, class_name, app_name)
         text = '@' + type + ' ' + class_name + ' ('
-        
+
         if app_name.nil? || app_name.empty?
           return text += 'Common)\n'
-        end 
+        end
 
-        return text += app_name + ')\n'
+        text + app_name + ')\n'
       end
 
       def create_swift_test_cases(names, variable_declaration, app_name)
         text = ''
         app_name_text = app_name.nil? || app_name.empty? ? '' : app_name + '.'
 
-        names.each do |name|  
+        names.each do |name|
           temp_array = name.split('/')
           variable = temp_array.pop
-          additional_text = temp_array.count == 0 ? '' : '.'
+          additional_text = temp_array.count.zero? ? '' : '.'
           text += '\t\t' + variable_declaration + app_name_text + temp_array.join('.') + additional_text + clean_variable_name(variable)
           text += name == names.last ? '' : '\n'
         end
-        return text
+
+        text
       end
 
       def create_objc_test_cases(names, variable_declaration, variable_end)
         text = ''
 
-        names.each do |name|  
+        names.each do |name|
           temp_array = name.split('/')
           variable_name = temp_array.length == 1 ? clean_variable_name(name) : temp_array.unshift(temp_array.shift.downcase).join('')
           text += '\t' + variable_declaration + variable_name + variable_end
           text += name == names.last ? '' : '\n'
         end
-        
-        return text
-      end
 
+        text
+      end
     end
   end
 end
