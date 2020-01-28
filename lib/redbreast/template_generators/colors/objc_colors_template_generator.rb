@@ -1,12 +1,12 @@
 require_relative '../objc_template_generator'
 
 module Redbreast
-    module TemplateGenerator
-        module Color
-            class ObjC < Redbreast::TemplateGenerator::ObjC
-                include ERB::Util
+  module TemplateGenerator
+    module Color
+      class ObjC < Redbreast::TemplateGenerator::ObjC
+        include ERB::Util
 
-                def h_template()
+        def h_template
 <<-TEMPLATE
 
 #import <UIKit/UIKit.h>
@@ -16,9 +16,9 @@ module Redbreast
 <%= generate_h_file_objc(asset_names, '+ (UIColor *)', ';')%>
 @end
 TEMPLATE
-                end
+        end
                     
-                def m_template()
+        def m_template
 <<-TEMPLATE
 
 #import <UIKit/UIKit.h>
@@ -28,9 +28,8 @@ TEMPLATE
 <%= generate_m_file_objc(asset_names, '+ (UIColor *)', '\n{\n\treturn [UIColor colorNamed:\@\"', '\" inBundle:', bundle, ' compatibleWithTraitCollection:nil];\n}\n') %>
 @end
 TEMPLATE
-                end
-
-            end
         end
+      end
     end
   end
+end

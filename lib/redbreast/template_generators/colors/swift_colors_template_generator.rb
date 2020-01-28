@@ -1,11 +1,11 @@
 require_relative '../swift_template_generator'
 
 module Redbreast
-    module TemplateGenerator
-        module Color
-            class Swift < TemplateGenerator::Swift
-                include ERB::Util
-                def template()
+  module TemplateGenerator
+    module Color
+      class Swift < TemplateGenerator::Swift
+        include ERB::Util
+        def template
 <<-TEMPLATE
 import UIKit
 
@@ -14,8 +14,8 @@ import UIKit
 <%= generate_file_swift(asset_names, '\t', '', 'static var ', ': UIColor { return UIColor(named: "', '", in: ', bundle, ', compatibleWith: nil)! }') %>    
 }
 TEMPLATE
-                end
-            end
         end
+      end
     end
+  end
 end

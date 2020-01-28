@@ -1,12 +1,12 @@
 require 'redbreast/template_generators/swift_template_generator'
 
 module Redbreast
-    module TemplateGenerator
-        module Test
-            class Swift < TemplateGenerator::Swift
-                include ERB::Util
+  module TemplateGenerator
+    module Test
+      class Swift < TemplateGenerator::Swift
+        include ERB::Util
 
-                def template()
+        def template
 <<-TEMPLATE
 
 import UIKit
@@ -22,8 +22,8 @@ class <%= File.basename(bundle[:outputTestPathColors], ".*") %>: XCTestCase {
 }
 
 TEMPLATE
-                end
-            end
         end
+      end 
     end
+  end
 end

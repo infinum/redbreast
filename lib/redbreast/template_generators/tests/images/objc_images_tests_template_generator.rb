@@ -1,16 +1,16 @@
 require 'redbreast/template_generators/objc_template_generator'
 
 module Redbreast
-    module TemplateGenerator
-        module Test
-            class ObjC < TemplateGenerator::ObjC
-                include ERB::Util
+  module TemplateGenerator
+    module Test
+      class ObjC < TemplateGenerator::ObjC
+        include ERB::Util
 
-                def h_template()
-                    nil
-                end
+        def h_template
+          nil
+        end
                     
-                def m_template()
+        def m_template
 <<-TEMPLATE
 
 #import <XCTest/XCTest.h>
@@ -30,9 +30,8 @@ module Redbreast
 @end
 
 TEMPLATE
-                end
-
-            end
         end
+      end
     end
   end
+end
