@@ -49,5 +49,4 @@ require 'redbreast/version'
 
 # Program used for creating images and colors
 module Redbreast
-
 end
