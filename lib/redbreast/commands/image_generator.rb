@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 module Redbreast
   module Command
+    # Class for creating images
     class ImageGenerator
       include Helper::Terminal
       include Helper::General
@@ -10,6 +13,7 @@ module Redbreast
 
       def call
         return if bundles.first[:outputSourcePathImages].nil?
+
         prompt.say('Generating image resources...')
         generate_image_sources(bundles, programming_language, app_name)
         success('Image resources generated!')
@@ -29,6 +33,7 @@ module Redbreast
       def write_images(image_names, bundle, programming_language, app_name)
         output_path = bundle[:outputSourcePathImages]
         return if output_path.to_s.empty?
+
         case programming_language.downcase
         when 'objc'
           serializer = Redbreast::Serializer::ObjC
@@ -43,10 +48,9 @@ module Redbreast
       # Pulling data
 
       def pull_asset_names(assetsSearchPath)
-          Redbreast::Crawler::Image
+        Redbreast::Crawler::Image
           .image_names_uniq(assetsSearchPath)
       end
-
     end
   end
 end

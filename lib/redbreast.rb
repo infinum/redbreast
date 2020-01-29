@@ -1,4 +1,6 @@
 # Parsing
+# frozen_string_literal: true
+
 require 'yaml'
 require 'erb'
 
@@ -45,7 +47,7 @@ require 'redbreast/error_handler'
 # Version
 require 'redbreast/version'
 
-
+# Program used for creating images and colors
 module Redbreast
 
 end

@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 module Redbreast
   module Command
+    # Class for generating image tests
     class ImageTestGenerator
       include Helper::Terminal
       include Helper::General
@@ -20,9 +23,9 @@ module Redbreast
       private
 
       def generate_test_sources(bundles, programming_language, app_name)
-          bundles.each do |bundle|
-              image_names = pull_asset_names(bundle[:assetsSearchPath])
-              write_tests(image_names, bundle, programming_language, app_name)
+        bundles.each do |bundle|
+          image_names = pull_asset_names(bundle[:assetsSearchPath])
+          write_tests(image_names, bundle, programming_language, app_name)
         end
       end
 
@@ -32,6 +35,7 @@ module Redbreast
         output_path = bundle[:outputTestPathImages]
 
         return if output_path.to_s.empty?
+
         case programming_language.downcase
         when 'objc'
           serializer = Redbreast::Serializer::ObjC
@@ -46,11 +50,9 @@ module Redbreast
       # Pulling data
 
       def pull_asset_names(assetsSearchPath)
-          Redbreast::Crawler::Image
+        Redbreast::Crawler::Image
           .image_names_uniq(assetsSearchPath)
       end
-
     end
   end
 end
-  

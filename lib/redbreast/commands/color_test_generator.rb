@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 module Redbreast
   module Command
+    # Class for creating color tests
     class ColorTestGenerator
       include Helper::Terminal
       include Helper::General
@@ -20,9 +23,9 @@ module Redbreast
       private
 
       def generate_test_sources(bundles, programming_language, app_name)
-          bundles.each do |bundle|
-              color_names = pull_asset_names(bundle[:assetsSearchPath])
-              write_tests(color_names, bundle, programming_language, app_name)
+        bundles.each do |bundle|
+          color_names = pull_asset_names(bundle[:assetsSearchPath])
+          write_tests(color_names, bundle, programming_language, app_name)
         end
       end
 
@@ -32,6 +35,7 @@ module Redbreast
         output_path = bundle[:outputTestPathColors]
 
         return if output_path.to_s.empty?
+
         case programming_language.downcase
         when 'objc'
           serializer = Redbreast::Serializer::ObjC
@@ -46,11 +50,9 @@ module Redbreast
       # Pulling data
 
       def pull_asset_names(assetsSearchPath)
-          Redbreast::Crawler::Color
+        Redbreast::Crawler::Color
           .color_names_uniq(assetsSearchPath)
       end
-
     end
   end
 end
-  
