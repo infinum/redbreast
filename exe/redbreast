@@ -22,7 +22,7 @@ end
 
 command :generate do |c|
   c.syntax = 'redbreast generate'
-  c.description = 'Generate images strong reference files.'
+  c.description = 'Generate images and colors strong reference files.'
   c.action do
     Redbreast::ErrorHandler.rescuable do
       Redbreast::Command::ColorGenerator.init
@@ -35,7 +35,7 @@ end
 
 command :install do |c|
   c.syntax = 'redbreast install'
-  c.description = 'Sets up file generator in your xcproject build phases. Whenewer you run a buld, new image names will be created'
+  c.description = 'Sets up file generator in your xcproject build phases. Whenewer you run a buld, new image/color names will be created'
   c.action do
     Redbreast::ErrorHandler.rescuable do
       Redbreast::Command::ConfigurationInstaller.init

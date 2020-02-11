@@ -29,8 +29,8 @@ In this example we will show how will your extensions (catergories) look like af
 Lets say this is how your *Images.xcassets* folder looks like:
 
 Images.xcassets
-    +-- App // namespaced
-    │    +-- Admin // namespaced
+    └── App // namespaced
+    │    └── Admin // namespaced
     │    │   └── Report.imageset
     │    │   └── User.imageset
     │    └── Course
@@ -52,12 +52,12 @@ extension UIImage {
 
     enum App {
 
-		    enum Admin {
-			      static var report: UIImage { return UIImage(named: "App/Admin/Report", in: .main, compatibleWith: nil)! }
-			      static var user: UIImage { return UIImage(named: "App/Admin/User", in: .main, compatibleWith: nil)! }
+        enum Admin {
+                static var report: UIImage { return UIImage(named: "App/Admin/Report", in: .main, compatibleWith: nil)! }
+                static var user: UIImage { return UIImage(named: "App/Admin/User", in: .main, compatibleWith: nil)! }
         }
 			  
-        static var assignment: UIImage { return UIImage(named: "App/Assignment", in: .main, compatibleWith: nil)! }
+    static var assignment: UIImage { return UIImage(named: "App/Assignment", in: .main, compatibleWith: nil)! }
     }
 }
 ```
@@ -98,8 +98,26 @@ For more examples checkout the sample project.
 
 ## Usage
 
-After installing redbreast run `redbreast init` to create redbreast.yml file. This file is used for generating your extensions.
-In the init you will be prompted to 
+### Init
+
+After installing redbreast run `redbreast init` to create `redbreast.yml` file. This file is used for generating your extensions.
+In the init you will be prompted to:
+
+* Choose a language in which colors/images will be generated.
+* Input the application name (optional)
+* Input bundle names (default is main)
+* Choose whether you want to generate images, colors or both
+* Input the path to assets folder
+* Input the path where the files will be created
+* Choose to create tests for generated assets
+
+### Generate
+
+When you finish creating `redbreast.yml` file,  run `redbreast generate` and all needed files will be generated.
+
+### Install
+
+Command `redbreast install` will setup a file generator in your project and whenever you build it, it will create new image/color names. 
 
 ## Contributing
 
