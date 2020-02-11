@@ -15,11 +15,11 @@ module Redbreast
       end
 
       def generate_file_swift(names, spacing, indentation, declaration, type, var_end, bundle, line_end)
+
         return if names.empty?
 
         text = ''
         arr = []
-
 
         names.each do |name|
           temp_arr = name.split('/')
@@ -60,7 +60,7 @@ module Redbreast
             text += "\n" + generate_file_swift(names_new_enum, spacing + "\t", indentation + enum_name, declaration, type, var_end, bundle, line_end)
             names_new_enum = []
           end
-  
+
           unless names_new.empty?
             indentation += indentation.empty? ? '' : '/'
             text += "\n" + generate_file_swift(names_new, spacing + "\t", indentation + enum_name, declaration, type, var_end, bundle, line_end)
@@ -75,7 +75,7 @@ module Redbreast
         text = 'extension ' + extended_class + " {\n"
 
         return text if app_name.nil? || app_name.empty?
-        
+
         text + "\tenum " + app_name + " {}\n}\n\nextension " + extended_class + '.' + app_name + " {\n"
       end
 

@@ -8,7 +8,7 @@ module Redbreast
     class << self
       def rescuable
         yield
-      rescue => e
+      rescue StandardError => e
         handle(e)
       end
 

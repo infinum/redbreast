@@ -27,16 +27,12 @@ module Redbreast
       end
 
       def create_objc_test_cases(names, variable_declaration, variable_end)
-        text = ''
-
-        names.each do |name|
+        names.reduce('')  do |text,  name|
           temp_array = name.split('/')
           variable_name = temp_array.length == 1 ? clean_variable_name(name) : temp_array.unshift(temp_array.shift.downcase).join('')
           text += "\t" + variable_declaration + variable_name + variable_end
           text += name == names.last ? '' : "\n"
         end
-
-        text
       end
 
       def generate_m_file_objc(names, variable_declaration, variable_type, variable_end, bundle_name, last_part)
@@ -66,6 +62,7 @@ module Redbreast
 
       def generate_category(type, class_name, app_name)
         text = '@' + type + ' ' + class_name + ' ('
+        text = "@#{type}  #{class_name}("
 
         return text += 'Common)\n' if app_name.nil? || app_name.empty?
 
