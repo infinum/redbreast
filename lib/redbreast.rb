@@ -1,26 +1,28 @@
 # Parsing
-require "yaml"
-require "erb"
+# frozen_string_literal: true
+
+require 'yaml'
+require 'erb'
 
 # Helpers
-require "redbreast/helpers/terminal"
-require "redbreast/helpers/general"
-require "redbreast/helpers/hash"
+require 'redbreast/helpers/terminal'
+require 'redbreast/helpers/general'
+require 'redbreast/helpers/hash'
 
 # Commands
-require "redbreast/commands/setup"
-require "redbreast/commands/image_generator"
-require "redbreast/commands/color_generator"
-require "redbreast/commands/image_test_generator"
-require "redbreast/commands/color_test_generator"
-require "redbreast/commands/configuration_installer"
+require 'redbreast/commands/setup'
+require 'redbreast/commands/image_generator'
+require 'redbreast/commands/color_generator'
+require 'redbreast/commands/image_test_generator'
+require 'redbreast/commands/color_test_generator'
+require 'redbreast/commands/configuration_installer'
 
 # File Accessors
-require "redbreast/io/config"
+require 'redbreast/io/config'
 
 # Crawlers
-require "redbreast/crawlers/image_crawler"
-require "redbreast/crawlers/color_crawler"
+require 'redbreast/crawlers/image_crawler'
+require 'redbreast/crawlers/color_crawler'
 
 # Serializers
 require 'redbreast/serializers/serializer'
@@ -40,12 +42,11 @@ require 'redbreast/template_generators/tests/images/objc_images_tests_template_g
 require 'redbreast/template_generators/tests/images/swift_images_tests_template_generator'
 
 # Error Handler
-require "redbreast/error_handler"
+require 'redbreast/error_handler'
 
 # Version
-require "redbreast/version"
+require 'redbreast/version'
 
-
+# Program used for creating images and colors
 module Redbreast
-
 end
