@@ -29,8 +29,8 @@ In this example we will show how will your extensions (catergories) look like af
 Lets say this is how your *Images.xcassets* folder looks like:
 
 Images.xcassets
-    └── App // namespaced
-    │    └── Admin // namespaced
+    +-- App // namespaced
+    │    +-- Admin // namespaced
     │    │   └── Report.imageset
     │    │   └── User.imageset
     │    └── Course
