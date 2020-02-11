@@ -43,7 +43,8 @@ Images.xcassets
         └── DownArrow.imageset
 ```
 
-*App* and *Admin* are namespaced folders while *Course* and *Arrows* are not. If a folder is namespaced, enum with that folder name will appear in the exension and path to that image will contain folder name. In the other case, folders are ignored and images belong to the last namespaced folder. 
+*App* and *Admin* are namespaced folders while *Course* and *Arrows* are not. If a folder is namespaced, enum with that folder name will appear in the exension and path to that image will contain folder name. In the other case, folders are ignored and images belong to the last namespaced folder.
+
 Redbreast will generate a file similar to this one varying on app name (more in Usage chapter). As you can see *Arrows* folder is not namespaced so there isn't an enum called *Arrows*. Because of this *downArrow* is in root of extension and is accessed by writing `UIImage.downArrow`. *Report* image is in two namespaced folders (*App* and *Admin*) so path for it is *App/Admin* and it located inside both enums. *Report* is accessed by `UIImage.App.Admin.report`.
 
 ```swift
