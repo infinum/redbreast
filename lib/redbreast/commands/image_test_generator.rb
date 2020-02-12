@@ -42,7 +42,7 @@ module Redbreast
           template_generator = Redbreast::TemplateGenerator::Test::ObjC
         when 'swift'
           serializer = Redbreast::Serializer::Swift
-          template_generator = Redbreast::TemplateGenerator::Test::Swift
+          template_generator = Redbreast::TemplateGenerator::Test::SwiftImages
         end
         serializer.new(image_names, bundle, app_name).save(output_path, template_generator.new)
       end
