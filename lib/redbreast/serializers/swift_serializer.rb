@@ -34,7 +34,7 @@ module Redbreast
         end
 
         arr = arr.uniq
-        text += indentation.empty? ? "\n" : ''
+        text += indentation.empty? && text.empty? ? "\n" : ''
         arr.each do |enum_name|
           names_new = []
           names_new_enum = []
@@ -56,13 +56,14 @@ module Redbreast
           end
 
           if !names_new_enum.empty? && new_enum_name == enum_name
-            indentation += indentation.empty? ? '' : '/'
+            indentation += (indentation.empty? || indentation[-1] == '/') ? '' : '/'
             text += "\n" + generate_file_swift(names_new_enum, spacing + "\t", indentation + enum_name, declaration, type, var_end, bundle, line_end)
             names_new_enum = []
           end
 
           unless names_new.empty?
-            indentation += indentation.empty? ? '' : '/'
+
+            indentation += (indentation.empty? || indentation[-1] == '/') ? '' : '/'
             text += "\n" + generate_file_swift(names_new, spacing + "\t", indentation + enum_name, declaration, type, var_end, bundle, line_end)
           end
 
@@ -72,7 +73,7 @@ module Redbreast
       end
 
       def generate_extension(extended_class, app_name)
-        text = 'extension ' + extended_class + " {\n"
+        text = 'extension ' + extended_class + " {"
 
         return text if app_name.nil? || app_name.empty?
 
