@@ -5,8 +5,8 @@ require 'redbreast/version' # frozen_string_literal: true
 Gem::Specification.new do |spec|
   spec.name = 'redbreast'
   spec.version = Redbreast::VERSION
-  spec.authors = ['Vlaho']
-  spec.email = ['vlaho.poluta@infinum.hr']
+  spec.authors = ['Maroje']
+  spec.email = ['maroje.marcelic@infinum.com']
 
   spec.summary = 'A CLI for safe and strongly typed resources'
   spec.homepage = 'https://github.com/infinum/redbreast'
