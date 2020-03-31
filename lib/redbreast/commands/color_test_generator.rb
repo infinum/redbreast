@@ -39,10 +39,10 @@ module Redbreast
         case programming_language.downcase
         when 'objc'
           serializer = Redbreast::Serializer::ObjC
-          template_generator = Redbreast::TemplateGenerator::Test::ObjC
+          template_generator = Redbreast::TemplateGenerator::ColorTest::ObjC
         when 'swift'
           serializer = Redbreast::Serializer::Swift
-          template_generator = Redbreast::TemplateGenerator::Test::Swift
+          template_generator = Redbreast::TemplateGenerator::ColorTest::Swift
         end
         serializer.new(color_names, bundle, app_name).save(output_path, template_generator.new)
       end

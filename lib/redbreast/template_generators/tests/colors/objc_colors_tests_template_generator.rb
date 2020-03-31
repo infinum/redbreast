@@ -2,7 +2,7 @@ require 'redbreast/template_generators/objc_template_generator' # frozen_string_
 
 module Redbreast
   module TemplateGenerator
-    module Test
+    module ColorTest
       # Used for creating color tests in objective-c.
       class ObjC < TemplateGenerator::ObjC
         include ERB::Util

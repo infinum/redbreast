@@ -3,10 +3,10 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'redbreast/version' # frozen_string_literal: true
 
 Gem::Specification.new do |spec|
-  spec.name = 'redbreast'
+  spec.name = 'redbreast_ios_cli'
   spec.version = Redbreast::VERSION
-  spec.authors = ['Vlaho']
-  spec.email = ['vlaho.poluta@infinum.hr']
+  spec.authors = ['Maroje']
+  spec.email = ['maroje.marcelic@infinum.com']
 
   spec.summary = 'A CLI for safe and strongly typed resources'
   spec.homepage = 'https://github.com/infinum/redbreast'
