@@ -50,18 +50,18 @@ Redbreast will generate a file similar to this one varying on app name (more in 
 ```swift
 extension UIImage {
 
-    static var appLogo: UIImage { return UIImage(named: "AppLogo", in: .main, compatibleWith: nil)! }
-  	static var downArrow: UIImage { return UIImage(named: "DownArrow", in: .main, compatibleWith: nil)! }
+  static var appLogo: UIImage { return UIImage(named: "AppLogo", in: .main, compatibleWith: nil)! }
+  static var downArrow: UIImage { return UIImage(named: "DownArrow", in: .main, compatibleWith: nil)! }
 
-    enum App {
+  enum App {
 
-        enum Admin {
-                static var report: UIImage { return UIImage(named: "App/Admin/Report", in: .main, compatibleWith: nil)! }
-                static var user: UIImage { return UIImage(named: "App/Admin/User", in: .main, compatibleWith: nil)! }
-        }
-			  
-    static var assignment: UIImage { return UIImage(named: "App/Assignment", in: .main, compatibleWith: nil)! }
+    enum Admin {
+      static var report: UIImage { return UIImage(named: "App/Admin/Report", in: .main, compatibleWith: nil)! }
+      static var user: UIImage { return UIImage(named: "App/Admin/User", in: .main, compatibleWith: nil)! }
     }
+			  
+  static var assignment: UIImage { return UIImage(named: "App/Assignment", in: .main, compatibleWith: nil)! }
+  }
 }
 ```
 
