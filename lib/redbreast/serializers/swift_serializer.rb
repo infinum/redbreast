@@ -15,23 +15,12 @@ module Redbreast
       end
 
       def generate_file_swift(names:, spacing: "\t", indentation: '', declaration: 'static var ', type:, var_end: '", in: ', bundle:,  line_end: ', compatibleWith: nil)! }')
-
         return if names.empty?
 
         text = ''
         arr = []
 
-        names.each do |name|
-          temp_arr = name.split('/')
-
-          if temp_arr.length != 1
-            arr.push(temp_arr.first)
-          else
-            name_prefix = indentation.empty? ? '' : '/'
-            text += spacing + declaration + clean_variable_name(name) + type + indentation + name_prefix + name + var_end + bundle[:reference] + line_end
-            text += name == names.last ? '' : "\n"
-          end
-        end
+        text, arr = generate_variables(names: names, spacing: spacing, type: type, indentation: indentation, bundle: bundle, text: text, array: arr)
 
         arr = arr.uniq
         text += indentation.empty? && text.empty? ? "\n" : ''
@@ -41,29 +30,16 @@ module Redbreast
           new_enum_name = enum_name
 
           text += "\n" + spacing + 'enum ' + enum_name + ' {'
-
-          names.each do |name|
-            temp_arr = name.split('/')
-
-            next if temp_arr.length == 1
-
-            if temp_arr.length > 2
-              names_new_enum.push(temp_arr.drop(1).join('/')) if temp_arr.first == new_enum_name
-              next
-            end
-
-            names_new.push(temp_arr.drop(1).join('/')) if temp_arr[0] == enum_name
-          end
+          names_new, names_new_enum = separate_variables_from_folders(names: names, enum_name: enum_name, new_enum_name: new_enum_name, names_new_enum: names_new_enum, names_new: names_new)
 
           if !names_new_enum.empty? && new_enum_name == enum_name
-            indentation += (indentation.empty? || indentation[-1] == '/') ? '' : '/'
+            indentation += indentation.empty? || indentation[-1] == '/' ? '' : '/'
             text += "\n" + generate_file_swift(names: names_new_enum, spacing: spacing + "\t", indentation: indentation + enum_name, type: type, bundle: bundle)
-            names_new_enum = []
           end
 
           unless names_new.empty?
 
-            indentation += (indentation.empty? || indentation[-1] == '/') ? '' : '/'
+            indentation += indentation.empty? || indentation[-1] == '/' ? '' : '/'
             text += "\n" + generate_file_swift(names: names_new, spacing: spacing + "\t", indentation: indentation + enum_name, type: type, bundle: bundle)
           end
 
@@ -73,7 +49,7 @@ module Redbreast
       end
 
       def generate_extension(extended_class, app_name)
-        text = 'extension ' + extended_class + " {"
+        text = 'extension ' + extended_class + " {\n"
 
         return text if app_name.nil? || app_name.empty?
 
@@ -93,6 +69,39 @@ module Redbreast
         end
 
         text
+      end
+
+      def generate_variables(names:, spacing:, type:, indentation:, bundle:, text:, array:, declaration: 'static var ', var_end: '", in: ', line_end: ', compatibleWith: nil)! }')
+        names.each do |name|
+          temp_arr = name.split('/')
+
+          if temp_arr.length != 1
+            array.push(temp_arr.first)
+          else
+            name_prefix = indentation.empty? ? '' : '/'
+            text += spacing + declaration + clean_variable_name(name) + type + indentation + name_prefix + name + var_end + bundle[:reference] + line_end
+            text += name == names.last ? '' : "\n"
+          end
+        end
+
+        [text, array]
+      end
+
+      def separate_variables_from_folders(names:, enum_name:, new_enum_name:, names_new_enum:, names_new:)
+        names.each do |name|
+          temp_arr = name.split('/')
+
+          next if temp_arr.length == 1
+
+          if temp_arr.length > 2
+            names_new_enum.push(temp_arr.drop(1).join('/')) if temp_arr.first == new_enum_name
+            next
+          end
+
+          names_new.push(temp_arr.drop(1).join('/')) if temp_arr[0] == enum_name
+        end
+
+        [names_new, names_new_enum]
       end
     end
   end
