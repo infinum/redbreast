@@ -40,7 +40,7 @@ module Redbreast
           serializer = Redbreast::Serializer::Swift
           template_generator = Redbreast::TemplateGenerator::Color::Swift
         end
-        serializer.new(color_names, bundle, app_name).save(output_path, template_generator.new)
+        serializer.new(color_names, bundle, app_name).save(output_source_path: output_path, template_generator: template_generator.new, generate_colors: true)
       end
 
       # Pulling data

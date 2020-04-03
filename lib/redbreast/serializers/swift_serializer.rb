@@ -6,7 +6,7 @@ module Redbreast
     class Swift < Base
       include Helper::General
 
-      def save(output_source_path, template_generator)
+      def save(output_path: output_source_path, generator: template_generator, is_color_generation: generate_colors)
         directory = File.dirname(output_source_path)
         FileUtils.mkdir_p directory unless File.exist? directory
 

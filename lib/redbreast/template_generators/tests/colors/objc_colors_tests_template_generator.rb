@@ -24,11 +24,10 @@ module Redbreast
 
             - (void)testExample
             {
-            <%= create_objc_test_cases(asset_names, '[UIColor ', '];')%>
+            <%= create_objc_test_cases(names: asset_names, variable_declaration: '[UIColor ', variable_end: '];')%>
             }
 
             @end
-
           TEMPLATE
         end
       end
