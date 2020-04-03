@@ -16,7 +16,7 @@ module Redbreast
   class <%= File.basename(bundle[:outputTestPathColors], ".*") %>: XCTestCase {
 
       func testIfColorsArePresent() {
-  <%= create_swift_test_cases(asset_names, '_ = UIColor.', app_name) %>
+  <%= create_swift_test_cases(names: asset_names, declaration: '_ = UIColor.', app_name: app_name) %>
       }
   }
 TEMPLATE

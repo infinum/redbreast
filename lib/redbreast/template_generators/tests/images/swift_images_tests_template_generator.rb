@@ -16,7 +16,7 @@ module Redbreast
   class <%= File.basename(bundle[:outputTestPathImages], ".*") %>: XCTestCase {
 
       func testIfImagesArePresent() {
-    <%= create_swift_test_cases(asset_names, '_ = UIImage.', app_name) %>
+    <%= create_swift_test_cases(names: asset_names, declaration: '_ = UIImage.', app_name: app_name) %>
       }
   }
 TEMPLATE

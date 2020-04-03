@@ -26,7 +26,7 @@ module Redbreast
         File.write(File.join(output_source_path, file_name), file)
       end
 
-      def create_objc_test_cases(names:, variable_declaration:, variable_end:)
+      def create_objc_test_cases(names:, variable_declaration:, variable_end: '];')
         text = ''
         names.each do |name|
           temp_array = name.split('/')
@@ -37,7 +37,7 @@ module Redbreast
         text
       end
 
-      def generate_m_file_objc(names:, variable_declaration:, variable_type:, variable_end:, bundle_name:, last_part:)
+      def generate_m_file_objc(names:, variable_declaration:, variable_type:, variable_end: "\" inBundle:", bundle_name:, last_part: " compatibleWithTraitCollection:nil];\n}\n")
         text = ''
 
         names.each do |name|
@@ -50,7 +50,7 @@ module Redbreast
         text
       end
 
-      def generate_h_file_objc(names:, variable_declaration:, variable_end:)
+      def generate_h_file_objc(names:, variable_declaration:, variable_end: ';')
         text = ''
 
         names.each do |name|

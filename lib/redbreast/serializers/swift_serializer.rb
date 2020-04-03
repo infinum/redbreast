@@ -6,7 +6,7 @@ module Redbreast
     class Swift < Base
       include Helper::General
 
-      def save(output_path: output_source_path, generator: template_generator, is_color_generation: generate_colors)
+      def save(output_source_path:, template_generator:, generate_colors:)
         directory = File.dirname(output_source_path)
         FileUtils.mkdir_p directory unless File.exist? directory
 
@@ -14,7 +14,7 @@ module Redbreast
         File.write(output_source_path, file)
       end
 
-      def generate_file_swift(names, spacing, indentation, declaration, type, var_end, bundle, line_end)
+      def generate_file_swift(names:, spacing: "\t", indentation: '', declaration: 'static var ', type:, var_end: '", in: ', bundle:,  line_end: ', compatibleWith: nil)! }')
 
         return if names.empty?
 
@@ -57,14 +57,14 @@ module Redbreast
 
           if !names_new_enum.empty? && new_enum_name == enum_name
             indentation += (indentation.empty? || indentation[-1] == '/') ? '' : '/'
-            text += "\n" + generate_file_swift(names_new_enum, spacing + "\t", indentation + enum_name, declaration, type, var_end, bundle, line_end)
+            text += "\n" + generate_file_swift(names: names_new_enum, spacing: spacing + "\t", indentation: indentation + enum_name, type: type, bundle: bundle)
             names_new_enum = []
           end
 
           unless names_new.empty?
 
             indentation += (indentation.empty? || indentation[-1] == '/') ? '' : '/'
-            text += "\n" + generate_file_swift(names_new, spacing + "\t", indentation + enum_name, declaration, type, var_end, bundle, line_end)
+            text += "\n" + generate_file_swift(names: names_new, spacing: spacing + "\t", indentation: indentation + enum_name, type: type, bundle: bundle)
           end
 
           text += "\n" + spacing + '}' + "\n"
@@ -80,7 +80,7 @@ module Redbreast
         text + "\tenum " + app_name + " {}\n}\n\nextension " + extended_class + '.' + app_name + " {\n"
       end
 
-      def create_swift_test_cases(names, declaration, app_name)
+      def create_swift_test_cases(names:, declaration:, app_name:)
         text = ''
         app_name_text = app_name.nil? || app_name.empty? ? '' : app_name + '.'
 
