@@ -1,4 +1,4 @@
-require 'xcodeproj' # frozen_string_literal: true
+require 'xcodeproj'
 
 module Redbreast
   module Command

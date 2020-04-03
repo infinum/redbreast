@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Redbreast
   module Command
     # Class for generating color files

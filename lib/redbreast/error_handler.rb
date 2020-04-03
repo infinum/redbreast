@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Redbreast
   # Class for handling errors that occurr
   class ErrorHandler

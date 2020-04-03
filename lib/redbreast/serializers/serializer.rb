@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Redbreast
   module Serializer
     # Used for initializing a serializer which will save files for respective languages

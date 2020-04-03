@@ -1,4 +1,4 @@
-require_relative 'serializer' # frozen_string_literal: true
+require_relative 'serializer' 
 
 module Redbreast
   module Serializer
@@ -27,11 +27,11 @@ module Redbreast
       end
 
       def create_objc_test_cases(names, variable_declaration, variable_end)
-        names.reduce('')  do |text,  name|
+        names.reduce('') do |text,  name|
           temp_array = name.split('/')
           variable_name = temp_array.length == 1 ? clean_variable_name(name) : temp_array.unshift(temp_array.shift.downcase).join('')
           text += "\t" + variable_declaration + variable_name + variable_end
-          text += name == names.last ? '' : "\n"
+          text + name == names.last ? '' : "\n"
         end
       end
 
@@ -61,8 +61,7 @@ module Redbreast
       end
 
       def generate_category(type, class_name, app_name)
-        text = '@' + type + ' ' + class_name + ' ('
-        text = "@#{type}  #{class_name}("
+        text = "@#{type}  #{class_name} ("
 
         return text += 'Common)\n' if app_name.nil? || app_name.empty?
 

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Redbreast
   module TemplateGenerator
     # Class for creating Swift templates

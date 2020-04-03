@@ -1,4 +1,4 @@
-require_relative '../objc_template_generator' # frozen_string_literal: true
+require_relative '../objc_template_generator' 
 
 module Redbreast
   module TemplateGenerator

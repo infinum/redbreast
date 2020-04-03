@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Redbreast
   module Helper
     # Module used for creating compact dictionaries

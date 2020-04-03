@@ -1,4 +1,4 @@
-require_relative 'serializer' # frozen_string_literal: true
+require_relative 'serializer' 
 
 module Redbreast
   module Serializer
