@@ -26,44 +26,44 @@ module Redbreast
         File.write(File.join(output_source_path, file_name), file)
       end
 
-      def create_objc_test_cases(names:, variable_declaration:, variable_end: '];')
+      def create_objc_test_cases(names:, variable:)
         text = ''
         names.each do |name|
           temp_array = name.split('/')
           variable_name = temp_array.length == 1 ? clean_variable_name(name) : temp_array.unshift(temp_array.shift.downcase).join('')
-          text += "\t" + variable_declaration + variable_name + variable_end
-          text += name == names.last ? '' : "\n"
+          text += variable % variable_name
         end
         text
       end
 
-      def generate_m_file_objc(names:, variable_declaration:, variable_type:, variable_end: "\" inBundle:", bundle_name:, last_part: " compatibleWithTraitCollection:nil];\n}\n")
+      def generate_m_file_objc(names:, variable_declaration:, variable_implementation:, bundle_name:)
+        text = ''
+
+        names.each do |name|
+          temp_arr = name.split('/')
+
+          variable_name = temp_arr.length == 1 ? clean_variable_name(name) : temp_arr.unshift(temp_arr.shift.downcase).join('')
+          text += variable_declaration % variable_name + variable_implementation % [name, bundle_name[:reference]]
+          text += name == names.last ? '' : "\n"
+        end
+
+        text
+      end
+
+      def generate_h_file_objc(names:, variable:)
         text = ''
 
         names.each do |name|
           temp_arr = name.split('/')
           variable_name = temp_arr.length == 1 ? clean_variable_name(name) : temp_arr.unshift(temp_arr.shift.downcase).join('')
-          text += variable_declaration + variable_name + variable_type + name + variable_end + bundle_name[:reference] + last_part
-          text += name == names.last ? '' : "\n"
-        end
-
-        text
-      end
-
-      def generate_h_file_objc(names:, variable_declaration:, variable_end: ';')
-        text = ''
-
-        names.each do |name|
-          temp_arr = name.split('/')
-          variable_name = temp_arr.length == 1 ? clean_variable_name(name) : temp_arr.unshift(temp_arr.shift.downcase).join('')
-          text += variable_declaration + variable_name + variable_end + "\n"
+          text += variable % variable_name
         end
 
         text
       end
 
       def generate_category(type, class_name, app_name)
-        text = "@#{type}  #{class_name} ("
+        text = "@#{type} #{class_name} ("
 
         return text += 'Common)\n' if app_name.nil? || app_name.empty?
 

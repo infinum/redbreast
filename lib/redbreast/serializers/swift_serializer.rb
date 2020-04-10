@@ -14,13 +14,13 @@ module Redbreast
         File.write(output_source_path, file)
       end
 
-      def generate_file_swift(names:, spacing: "\t", indentation: '', declaration: 'static var ', type:, var_end: '", in: ', bundle:,  line_end: ', compatibleWith: nil)! }')
+      def generate_file_swift(names:, spacing: "\t", indentation: '', variable:, bundle:)
         return if names.empty?
 
         text = ''
         arr = []
 
-        text, arr = generate_variables(names: names, spacing: spacing, type: type, indentation: indentation, bundle: bundle, text: text, array: arr)
+        text, arr = generate_variables(names: names, spacing: spacing, indentation: indentation, variable: variable, bundle: bundle, text: text, array: arr)
 
         arr = arr.uniq
         text += indentation.empty? && text.empty? ? "\n" : ''
@@ -34,13 +34,13 @@ module Redbreast
 
           if !names_new_enum.empty? && new_enum_name == enum_name
             indentation += indentation.empty? || indentation[-1] == '/' ? '' : '/'
-            text += "\n" + generate_file_swift(names: names_new_enum, spacing: spacing + "\t", indentation: indentation + enum_name, type: type, bundle: bundle)
+            text += "\n" + generate_file_swift(names: names_new_enum, spacing: spacing + "\t", indentation: indentation + enum_name, variable: variable, bundle: bundle)
           end
 
           unless names_new.empty?
 
             indentation += indentation.empty? || indentation[-1] == '/' ? '' : '/'
-            text += "\n" + generate_file_swift(names: names_new, spacing: spacing + "\t", indentation: indentation + enum_name, type: type, bundle: bundle)
+            text += "\n" + generate_file_swift(names: names_new, spacing: spacing + "\t", indentation: indentation + enum_name, variable: variable, bundle: bundle)
           end
 
           text += "\n" + spacing + '}' + "\n"
@@ -71,7 +71,7 @@ module Redbreast
         text
       end
 
-      def generate_variables(names:, spacing:, type:, indentation:, bundle:, text:, array:, declaration: 'static var ', var_end: '", in: ', line_end: ', compatibleWith: nil)! }')
+      def generate_variables(names:, spacing:, indentation:, bundle:, variable:, text:, array:)
         names.each do |name|
           temp_arr = name.split('/')
 
@@ -79,7 +79,8 @@ module Redbreast
             array.push(temp_arr.first)
           else
             name_prefix = indentation.empty? ? '' : '/'
-            text += spacing + declaration + clean_variable_name(name) + type + indentation + name_prefix + name + var_end + bundle[:reference] + line_end
+            text += spacing + variable % [clean_variable_name(name), indentation + name_prefix + name, bundle[:reference]]
+            #text += spacing + declaration + clean_variable_name(name) + type + indentation + name_prefix + name + var_end + bundle[:reference] + line_end
             text += name == names.last ? '' : "\n"
           end
         end
