@@ -1,18 +1,19 @@
 module Redbreast
-    module Serializer
-        class Base
-          include ERB::Util
-          attr_accessor :image_names, :bundle
-  
-          def initialize(image_names, bundle)
-            @image_names = image_names
-            @bundle = bundle
-          end
-  
-          def save(path)
-            fail NotImplementedError, 'Abstract Method'
-          end
-  
-        end
+  module Serializer
+    # Used for initializing a serializer which will save files for respective languages
+    class Base
+      include ERB::Util
+      attr_accessor :asset_names, :bundle
+
+      def initialize(asset_names, bundle, app_name)
+        @asset_names = asset_names
+        @bundle = bundle
+        @app_name = app_name
+      end
+
+      def save(*)
+        raise NotImplementedError, 'Abstract Method'
+      end
     end
   end
+end

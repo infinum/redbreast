@@ -12,7 +12,7 @@ program :description, 'An iOS client for safe and strong resources.'
 command :init do |c|
   c.syntax = 'redbreast init'
   c.description = 'Sets up a redbreast.yml config for selected project.'
-  c.action do |_args, options|
+  c.action do
     Redbreast::ErrorHandler.rescuable do
       Redbreast::Command::Setup.init
     end
@@ -21,19 +21,21 @@ end
 
 command :generate do |c|
   c.syntax = 'redbreast generate'
-  c.description = 'Generate images strong reference files.'
-  c.action do |_args, options|
+  c.description = 'Generate images and colors strong reference files.'
+  c.action do
     Redbreast::ErrorHandler.rescuable do
+      Redbreast::Command::ColorGenerator.init
       Redbreast::Command::ImageGenerator.init
-      Redbreast::Command::TestGenerator.init
+      Redbreast::Command::ColorTestGenerator.init
+      Redbreast::Command::ImageTestGenerator.init
     end
   end
 end
 
 command :install do |c|
   c.syntax = 'redbreast install'
-  c.description = 'Sets up file generator in your xcproject build phases. Whenewer you run a buld, new image names will be created'
-  c.action do |_args, options|
+  c.description = 'Sets up file generator in your xcproject build phases. Whenewer you run a buld, new image/color names will be created'
+  c.action do
     Redbreast::ErrorHandler.rescuable do
       Redbreast::Command::ConfigurationInstaller.init
     end
