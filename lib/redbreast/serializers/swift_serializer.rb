@@ -20,10 +20,10 @@ module Redbreast
         text = ''
         arr = []
 
-        text, arr = generate_variables(names: names, spacing: spacing, indentation: indentation, variable: variable, bundle: bundle, text: text, array: arr)
+        vars, arr = generate_variables(names: names, spacing: spacing, indentation: indentation, variable: variable, bundle: bundle, text: text, array: arr)
 
         arr = arr.uniq
-        text += indentation.empty? && text.empty? ? "\n" : ''
+        #text += indentation.empty? && text.empty? ? "\n" : ''
         arr.each do |enum_name|
           names_new = []
           names_new_enum = []
@@ -45,7 +45,7 @@ module Redbreast
 
           text += "\n" + spacing + '}' + "\n"
         end
-        text
+        text = vars
       end
 
       def generate_extension(extended_class, app_name)
