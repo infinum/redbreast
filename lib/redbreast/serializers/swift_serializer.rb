@@ -40,7 +40,7 @@ module Redbreast
           unless names_new.empty?
 
             indentation += indentation.empty? || indentation[-1] == '/' ? '' : '/'
-            text += "\n" + generate_file_swift(names: names_new, spacing: spacing + "\t", indentation: indentation + enum_name, variable: variable, bundle: bundle)
+            text += generate_file_swift(names: names_new, spacing: spacing + "\t", indentation: indentation + enum_name, variable: variable, bundle: bundle)
           end
 
           text += "\n" + spacing + '}' + "\n"
@@ -53,7 +53,7 @@ module Redbreast
 
         return text if app_name.nil? || app_name.empty?
 
-        text + "\tenum " + app_name + " {}\n}\n\nextension " + extended_class + '.' + app_name + " {\n"
+        text + "\tenum " + app_name + " {}\n}\n\nextension " + extended_class + '.' + app_name + " {"
       end
 
       def create_swift_test_cases(names:, declaration:, app_name:)
@@ -79,9 +79,7 @@ module Redbreast
             array.push(temp_arr.first)
           else
             name_prefix = indentation.empty? ? '' : '/'
-            text += spacing + variable % [clean_variable_name(name), indentation + name_prefix + name, bundle[:reference]]
-            #text += spacing + declaration + clean_variable_name(name) + type + indentation + name_prefix + name + var_end + bundle[:reference] + line_end
-            text += name == names.last ? '' : "\n"
+            text += "\n" + spacing + variable % [clean_variable_name(name), indentation + name_prefix + name, bundle[:reference]]
           end
         end
 
