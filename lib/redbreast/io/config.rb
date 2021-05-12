@@ -2,7 +2,7 @@ module Redbreast
   module IO
     # Used for reading and writing to config file
     class Config
-      CONFIG_FILE_PATH = "#{Dir.pwd}/.redbrest.yml"
+      CONFIG_FILE_PATH = "#{Dir.pwd}/.redbreast.yml"
 
       class << self
         def write(data)
