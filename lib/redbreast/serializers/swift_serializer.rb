@@ -20,10 +20,10 @@ module Redbreast
         text = ''
         arr = []
 
-        text, arr = generate_variables(names: names, spacing: spacing, indentation: indentation, variable: variable, bundle: bundle, text: text, array: arr)
+        vars, arr = generate_variables(names: names, spacing: spacing, indentation: indentation, variable: variable, bundle: bundle, text: text, array: arr)
 
         arr = arr.uniq
-        text += indentation.empty? && text.empty? ? "\n" : ''
+        #text += indentation.empty? && text.empty? ? "\n" : ''
         arr.each do |enum_name|
           names_new = []
           names_new_enum = []
@@ -40,12 +40,12 @@ module Redbreast
           unless names_new.empty?
 
             indentation += indentation.empty? || indentation[-1] == '/' ? '' : '/'
-            text += "\n" + generate_file_swift(names: names_new, spacing: spacing + "\t", indentation: indentation + enum_name, variable: variable, bundle: bundle)
+            text += generate_file_swift(names: names_new, spacing: spacing + "\t", indentation: indentation + enum_name, variable: variable, bundle: bundle)
           end
 
           text += "\n" + spacing + '}' + "\n"
         end
-        text
+        text + vars
       end
 
       def generate_extension(extended_class, app_name)
@@ -53,7 +53,7 @@ module Redbreast
 
         return text if app_name.nil? || app_name.empty?
 
-        text + "\tenum " + app_name + " {}\n}\n\nextension " + extended_class + '.' + app_name + " {\n"
+        text + "\tenum " + app_name + " {}\n}\n\nextension " + extended_class + '.' + app_name + " {"
       end
 
       def create_swift_test_cases(names:, declaration:, app_name:)
@@ -79,9 +79,7 @@ module Redbreast
             array.push(temp_arr.first)
           else
             name_prefix = indentation.empty? ? '' : '/'
-            text += spacing + variable % [clean_variable_name(name), indentation + name_prefix + name, bundle[:reference]]
-            #text += spacing + declaration + clean_variable_name(name) + type + indentation + name_prefix + name + var_end + bundle[:reference] + line_end
-            text += name == names.last ? '' : "\n"
+            text += "\n" + spacing + variable % [clean_variable_name(name), indentation + name_prefix + name, bundle[:reference]]
           end
         end
 

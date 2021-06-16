@@ -38,7 +38,7 @@ module Redbreast
             outputSourcePathColors: output_source_path_colors,
             outputTestPathImages: output_test_path_images,
             outputTestPathColors: output_test_path_colors,
-            testableImport: include_tests ? testable_import_prompt(bundle, language) : nil
+            testableImport: include_tests ? testable_import_prompt(bundle, app_name, language) : nil
           }
           compact fields
         end
@@ -138,12 +138,12 @@ module Redbreast
         end
       end
 
-      def testable_import_prompt(bundle, language)
+      def testable_import_prompt(bundle, app_name, language)
         case language
         when 'objc'
           nil
         when 'swift'
-          prompt.ask("Please enter testable import name for bundle #{bundle}?", required: true)
+          prompt.ask("Please enter a name that will be used for testable import in #{bundle} bundle?", default: "#{app_name}", required: true)
         end
       end
 
