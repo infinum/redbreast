@@ -41,6 +41,9 @@ module Redbreast
         when 'swift'
           serializer = Redbreast::Serializer::Swift
           template_generator = Redbreast::TemplateGenerator::ImageTest::Swift
+        when 'swiftui'
+          serializer = Redbreast::Serializer::SwiftUI
+          template_generator = Redbreast::TemplateGenerator::ImageTest::SwiftUI
         end
         serializer.new(image_names, bundle, app_name).save(output_source_path: output_path, template_generator: template_generator.new, generate_colors: false)
 
