@@ -4,7 +4,7 @@ module Redbreast
   module TemplateGenerator
     module Image
       # Used for creating images in swift.
-      class Swift < TemplateGenerator::SwiftUI
+      class SwiftUI < TemplateGenerator::SwiftUI
         include ERB::Util
 
         def template

@@ -4,7 +4,7 @@ module Redbreast
   module TemplateGenerator
     module Color
       # Used for creating colors in swift.
-      class Swift < TemplateGenerator::SwiftUI
+      class SwiftUI < TemplateGenerator::SwiftUI
         include ERB::Util
         def template
           <<~TEMPLATE

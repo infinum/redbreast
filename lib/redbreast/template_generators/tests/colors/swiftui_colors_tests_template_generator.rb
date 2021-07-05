@@ -4,7 +4,7 @@ module Redbreast
   module TemplateGenerator
     module ColorTest
       # Used for creating color tests in swift.
-      class Swift < TemplateGenerator::SwiftUI
+      class SwiftUI < TemplateGenerator::SwiftUI
         include ERB::Util
         def template
 <<~TEMPLATE

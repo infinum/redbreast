@@ -4,7 +4,7 @@ module Redbreast
   module TemplateGenerator
     module ImageTest
       # Used for creating image tests in swift.
-      class Swift < TemplateGenerator::SwiftUI
+      class SwiftUI < TemplateGenerator::SwiftUI
         include ERB::Util
         def template
 <<~TEMPLATE
