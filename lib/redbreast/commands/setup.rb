@@ -116,7 +116,7 @@ module Redbreast
         when 'swift'
           prompt.ask(prompt_text, default: './Common/Extensions/UIColorExtension.swift')
         when 'swiftui'
-          prompt.ask(prompt_text, default: './Common/Extensions/UIColorExtension.swift')
+          prompt.ask(prompt_text, default: './Common/Extensions/ColorExtension.swift')
         end
       end
 
