@@ -56,7 +56,7 @@ module Redbreast
       # Language
 
       def language_prompt
-        languages = { 'Swift' => 'swift', 'Objective-C' => 'objc' }
+        languages = { 'Swift' => 'swift', 'SwiftUI' => 'swiftui', 'Objective-C' => 'objc', }
         prompt.select('Choose a language: ', languages)
       end
 
@@ -76,6 +76,8 @@ module Redbreast
           prompt.ask(prompt_text, default: 'mainBundle')
         when 'swift'
           prompt.ask(prompt_text, default: 'main')
+        when 'swiftui'
+          prompt.ask(prompt_text, default: 'main')
         end
       end
 
@@ -84,6 +86,8 @@ module Redbreast
         when 'objc'
           "[NSBundle #{bundle_name}]"
         when 'swift'
+          ".#{bundle_name}"
+        when 'swiftui'
           ".#{bundle_name}"
         end
       end
@@ -97,6 +101,8 @@ module Redbreast
           prompt.ask(prompt_text, default: './Common/Categories/Images')
         when 'swift'
           prompt.ask(prompt_text, default: './Common/Extensions/UIImageExtension.swift')
+        when 'swiftui'
+          prompt.ask(prompt_text, default: './Common/Extensions/ImageExtension.swift')
         end
       end
 
@@ -109,6 +115,8 @@ module Redbreast
           prompt.ask(prompt_text, default: './Common/Categories/Colors')
         when 'swift'
           prompt.ask(prompt_text, default: './Common/Extensions/UIColorExtension.swift')
+        when 'swiftui'
+          prompt.ask(prompt_text, default: './Common/Extensions/ColorExtension.swift')
         end
       end
 
@@ -125,6 +133,8 @@ module Redbreast
           prompt.ask(prompt_text, default: './Common/Categories/ImagesTest')
         when 'swift'
           prompt.ask(prompt_text, default: './Common/Extensions/UIImageExtensionTest.swift')
+        when 'swiftui'
+          prompt.ask(prompt_text, default: './Common/Extensions/ImageExtensionTest.swift')
         end
       end
 
@@ -135,6 +145,8 @@ module Redbreast
           prompt.ask(prompt_text, default: './Common/Categories/ColorsTest')
         when 'swift'
           prompt.ask(prompt_text, default: './Common/Extensions/UIColorExtensionTest.swift')
+        when 'swiftui'
+          prompt.ask(prompt_text, default: './Common/Extensions/ColorExtensionTest.swift')
         end
       end
 
@@ -143,6 +155,8 @@ module Redbreast
         when 'objc'
           nil
         when 'swift'
+          prompt.ask("Please enter a name that will be used for testable import in #{bundle} bundle?", default: "#{app_name}", required: true)
+        when 'swiftui'
           prompt.ask("Please enter a name that will be used for testable import in #{bundle} bundle?", default: "#{app_name}", required: true)
         end
       end
