@@ -40,7 +40,7 @@ module Redbreast
         text = ''
 
         names.each do |name|
-          temp_arr = name.split('/')
+          temp_arr = name.split('/').map { |folder| upper_camel_case(folder) }
 
           variable_name = temp_arr.length == 1 ? clean_variable_name(name) : temp_arr.unshift(temp_arr.shift.downcase).join('')
           text += variable_declaration % variable_name + variable_implementation % [name, bundle_name[:reference]]
@@ -54,7 +54,7 @@ module Redbreast
         text = ''
 
         names.each do |name|
-          temp_arr = name.split('/')
+          temp_arr = name.split('/').map { |folder| upper_camel_case(folder) }
           variable_name = temp_arr.length == 1 ? clean_variable_name(name) : temp_arr.unshift(temp_arr.shift.downcase).join('')
           text += variable % variable_name
         end

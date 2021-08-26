@@ -23,13 +23,13 @@ module Redbreast
         vars, arr = generate_variables(names: names, spacing: spacing, indentation: indentation, variable: variable, bundle: bundle, text: text, array: arr)
 
         arr = arr.uniq
-        #text += indentation.empty? && text.empty? ? "\n" : ''
+
         arr.each do |enum_name|
           names_new = []
           names_new_enum = []
           new_enum_name = enum_name
 
-          text += "\n" + spacing + 'enum ' + enum_name + ' {'
+          text += "\n" + spacing + 'enum ' + upper_camel_case(enum_name) + ' {'
           names_new, names_new_enum = separate_variables_from_folders(names: names, enum_name: enum_name, new_enum_name: new_enum_name, names_new_enum: names_new_enum, names_new: names_new)
 
           if !names_new_enum.empty? && new_enum_name == enum_name

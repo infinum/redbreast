@@ -45,6 +45,17 @@ module Redbreast
         escape_with_underscore_if_needed(clean_name)
       end
 
+      def upper_camel_case(name)
+        clean_name = name
+                     .split(/[^0-9a-zA-Z]/)
+                     .reject(&:empty?)
+                     .each_with_index
+                     .map { |v, i| i.zero? ? v.tap { |char| char[0] = char[0].upcase } : v.capitalize }
+                     .join
+
+        escape_with_underscore_if_needed(clean_name)
+      end
+
       def clean_case_name(name)
         clean_variable_name(name)
       end
