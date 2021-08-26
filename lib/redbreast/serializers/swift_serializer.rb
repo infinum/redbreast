@@ -29,7 +29,7 @@ module Redbreast
           names_new_enum = []
           new_enum_name = enum_name
 
-          text += "\n" + spacing + 'enum ' + enum_name + ' {'
+          text += "\n" + spacing + 'enum ' + clean_enum_name(enum_name) + ' {'
           names_new, names_new_enum = separate_variables_from_folders(names: names, enum_name: enum_name, new_enum_name: new_enum_name, names_new_enum: names_new_enum, names_new: names_new)
 
           if !names_new_enum.empty? && new_enum_name == enum_name
