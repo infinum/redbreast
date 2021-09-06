@@ -1,0 +1,14 @@
+{
+    "language": "swift",
+    "app_name": "PGC",
+    "bundle":  {
+        "name": "main",
+        "reference": ".main",
+        "assetsSearchPath": "**/*.xcassets",
+        "outputSourcePathImages": "./Common/Extensions/UIImageExtension.swift",
+        "outputSourcePathColors": "./Common/Extensions/UIColorExtension.swift",
+        "outputTestPathImages": "./Common/Extensions/UIImageExtensionTest.swift",
+        "outputTestPathColors": "./Common/Extensions/UIColorExtensionTest.swift",
+        "testableImport": "PGC"
+    }
+}

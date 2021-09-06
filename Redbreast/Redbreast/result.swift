@@ -1,0 +1,1 @@
+//static var Maroje: UIImage { return UIImage(named: "Vlaho", in: Luka, compatibleWith: nil)! }

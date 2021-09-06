@@ -29,6 +29,10 @@ module Redbreast
       # Serializing data
 
       def write_images(image_names, bundle, programming_language, app_name)
+        image_names.each { |name|
+          print("#{name}\n")
+        }
+        print(image_names)
         output_path = bundle[:outputSourcePathImages]
         return if output_path.to_s.empty?
 
