@@ -120,7 +120,39 @@ When you finish creating `redbreast.yml` file,  run `redbreast generate` and all
 
 ### Install
 
-Command `redbreast install` will setup a file generator in your project and whenever you build it, it will create new image/color names. 
+Command `redbreast install` will setup a file generator in your project and whenever you build it, it will create new image/color names. If you choose to use this option a build phase script will be added to your project which will run the `generate` action when building the project. If you use Bitrise or some other CI this could be problematic, as there is no Redbreast on the machine which will be building your project. To address this issue, we replace the script which `redbreast install` creates:
+```
+PATH=$PATH:~/.rbenv/shims
+redbreast generate
+```
+with the following script:
+```
+PATH="~/.rbenv/shims:$PATH"
+PATH="~/.rbenv/bin:$PATH"
+PATH="~/.rvm/bin:$PATH"
+PATH="/usr/local/opt/ruby/bin:$PATH"
+PATH="/usr/local/lib/ruby/gems/3.0.0/bin:$PATH"
+
+rbenv_path=$(command -v rbenv)
+if [ $rbenv_path ]; then
+    eval "$(rbenv init - --no-rehash)"
+fi
+
+RVM_SCRIPT="/usr/local/rvm/scripts/rvm"
+if [ -f $RVM_SCRIPT ]; then
+    source $RVM_SCRIPT
+fi
+
+command_path=$(command -v redbreast)
+if [ $command_path ]
+then
+    (cd $SRCROOT/../ ; redbreast generate)
+else
+    gem install redbreast
+    (cd $SRCROOT/../ ; redbreast generate)
+fi
+```
+which will make sure that Redbreast is installed if needed before calling `generate`.
 
 ## Contributing
 
