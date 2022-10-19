@@ -49,7 +49,7 @@ module Redbreast
       end
 
       def generate_extension(extended_class, app_name)
-        text = 'extension ' + extended_class + " {\n"
+        text = 'public extension ' + extended_class + " {\n"
 
         return text if app_name.nil? || app_name.empty?
 
