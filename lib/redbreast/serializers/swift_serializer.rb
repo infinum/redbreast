@@ -54,7 +54,7 @@ module Redbreast
 
         return text if app_name.nil? || app_name.empty?
 
-        text + SPACER + "enum " + app_name + " {}\n}\n\nextension " + extended_class + '.' + app_name + " {"
+        text + SPACER + "enum " + app_name + " {}\n}\n\npublic extension " + extended_class + '.' + app_name + " {"
       end
 
       def create_swift_test_cases(names:, declaration:, app_name:)
