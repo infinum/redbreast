@@ -14,6 +14,9 @@ module Redbreast
         prompt.say('Adding generation script to xcode buid phases...')
         project = fetch_project
         configure_target project.targets.first
+        project.build_configurations.each { |conf| puts conf.name if conf.debug? }
+        #puts "#{project.build_configurations}"
+        #puts "#{project.build_configurations.first.debug?}"
         project.save
         success('Build phase setup!')
       end
