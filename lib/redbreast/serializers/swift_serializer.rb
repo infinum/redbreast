@@ -30,7 +30,7 @@ module Redbreast
           names_new_enum = []
           new_enum_name = enum_name
 
-          text += "\n" + spacing + 'enum ' + upper_camel_case(enum_name) + ' {'
+          text += "\n" + spacing + 'public enum ' + upper_camel_case(enum_name) + ' {'
           names_new, names_new_enum = separate_variables_from_folders(names: names, enum_name: enum_name, new_enum_name: new_enum_name, names_new_enum: names_new_enum, names_new: names_new)
 
           if !names_new_enum.empty? && new_enum_name == enum_name
@@ -54,7 +54,7 @@ module Redbreast
 
         return text if app_name.nil? || app_name.empty?
 
-        text + SPACER + "enum " + app_name + " {}\n}\n\npublic extension " + extended_class + '.' + app_name + " {"
+        text + SPACER + "enum " + app_name + " {}\n}\n\nextension " + extended_class + '.' + app_name + " {"
       end
 
       def create_swift_test_cases(names:, declaration:, app_name:)
