@@ -11,7 +11,7 @@ module Redbreast
         directory = File.dirname(output_source_path)
         FileUtils.mkdir_p directory unless File.exist? directory
 
-        file = ERB.new(template_generator.template, nil, '-').result(binding)
+        file = ERB.new(template_generator.template, trim_mode: '-').result(binding)
         File.write(output_source_path, file)
       end
 

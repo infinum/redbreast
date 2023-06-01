@@ -22,7 +22,7 @@ module Redbreast
       end
 
       def write(output_source_path, template, file_name)
-        file = ERB.new(template, nil, '-').result(binding)
+        file = ERB.new(template, trim_mode: '-').result(binding)
         File.write(File.join(output_source_path, file_name), file)
       end
 
