@@ -14,16 +14,17 @@ module Redbreast
         return if filtered_bundles.empty?
 
         prompt.say('Generating images test resources...')
-        generate_test_sources(bundles, programming_language, app_name)
+        generate_test_sources(bundles, app_name)
         success('Images test resources generated!')
       end
 
       private
 
-      def generate_test_sources(bundles, programming_language, app_name)
+      def generate_test_sources(bundles, app_name)
         bundles.each do |bundle|
           image_names = pull_asset_names(bundle[:assetsSearchPath])
-          write_tests(image_names, bundle, programming_language, app_name)
+          bundle_language = bundle[:language] || programming_language
+          write_tests(image_names, bundle, bundle_language, app_name)
         end
       end
 
