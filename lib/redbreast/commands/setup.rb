@@ -88,7 +88,7 @@ module Redbreast
       # Images source path
 
       def images_sources_path_prompt(bundle, language)
-        prompt_text = "Where would you like to store images resources files for bundle #{bundle}?"
+        prompt_text = "Where would you like to store image resources files for bundle #{bundle}?"
         case language
         when 'objc'
           prompt.ask(prompt_text, default: './Common/Categories/Images')
@@ -102,7 +102,7 @@ module Redbreast
       # Colors source path
 
       def colors_sources_path_prompt(bundle, language)
-        prompt_text = "Where would you like to store colors resources files for bundle #{bundle}?"
+        prompt_text = "Where would you like to store color resources files for bundle #{bundle}?"
         case language
         when 'objc'
           prompt.ask(prompt_text, default: './Common/Categories/Colors')
@@ -120,7 +120,7 @@ module Redbreast
       end
 
       def images_tests_path_prompt(bundle, language)
-        prompt_text = "Where would you like to store tests for bundle #{bundle}?"
+        prompt_text = "Where would you like to store image tests for bundle #{bundle}?"
         case language
         when 'objc'
           prompt.ask(prompt_text, default: './Common/Categories/ImagesTest')
@@ -132,7 +132,7 @@ module Redbreast
       end
 
       def colors_tests_path_prompt(bundle, language)
-        prompt_text = "Where would you like to store tests for bundle #{bundle}?"
+        prompt_text = "Where would you like to store color tests for bundle #{bundle}?"
         case language
         when 'objc'
           prompt.ask(prompt_text, default: './Common/Categories/ColorsTest')
