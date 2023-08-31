@@ -10,19 +10,21 @@ module Redbreast
       end
 
       def call
-        return if bundles.first[:outputSourcePathColors].nil?
+        filtered_bundles = bundles.select { |bundle| bundle[:outputSourcePathColors] }
+        return if filtered_bundles.empty?
 
         prompt.say('Generating color resources...')
-        generate_color_sources(bundles, programming_language, app_name)
+        generate_color_sources(filtered_bundles, app_name)
         success('Color resources generated!')
       end
 
       private
 
-      def generate_color_sources(bundles, programming_language, app_name)
+      def generate_color_sources(bundles, app_name)
         bundles.each do |bundle|
           color_names = pull_asset_names(bundle[:assetsSearchPath])
-          write_colors(color_names, bundle, programming_language, app_name)
+          bundle_language = bundle[:language] || programming_language 
+          write_colors(color_names, bundle, bundle_language, app_name)
         end
       end
 

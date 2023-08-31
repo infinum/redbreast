@@ -10,19 +10,21 @@ module Redbreast
       end
 
       def call
-        return if bundles.first[:outputSourcePathImages].nil?
+        filtered_bundles = bundles.select { |bundle| bundle[:outputSourcePathImages] }
+        return if filtered_bundles.empty?
 
         prompt.say('Generating image resources...')
-        generate_image_sources(bundles, programming_language, app_name)
+        generate_image_sources(filtered_bundles, app_name)
         success('Image resources generated!')
       end
 
       private
 
-      def generate_image_sources(bundles, programming_language, app_name)
+      def generate_image_sources(bundles, app_name)
         bundles.each do |bundle|
           image_names = pull_asset_names(bundle[:assetsSearchPath])
-          write_images(image_names, bundle, programming_language, app_name)
+          bundle_language = bundle[:language] || programming_language
+          write_images(image_names, bundle, bundle_language, app_name)
         end
       end
 
