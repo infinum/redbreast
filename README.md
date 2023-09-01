@@ -103,7 +103,7 @@ For more examples checkout the sample project.
 
 ### Init
 
-After installing redbreast run `redbreast init` to create `redbreast.yml` file. This file is used for generating your extensions.
+After installing redbreast run `redbreast init` to create `.redbreast.yml` file. This file is used for generating your extensions.
 In the init you will be prompted to:
 
 * Choose a language in which colors/images will be generated.
@@ -114,9 +114,69 @@ In the init you will be prompted to:
 * Input the path where the files will be created
 * Choose to create tests for generated assets
 
+This is how your `.redbreast.yml` file should look after the `redbreast init` if you are using version 1.3.1 and lower:
+
+```yml
+---
+:language: swift
+:bundles:
+- :name: main
+  :reference: ".main"
+  :assetsSearchPath: "MyProject/**/*.xcassets"
+  :outputSourcePathImages: "./MyProject/Common/Extensions/UIImage+Redbreast.swift"
+  :outputSourcePathColors: "./MyProject/Common/Extensions/UIColor+Redbreast.swift"
+  :outputTestPathImages: "./MyProject-UnitTests/Common/Extensions/UIImageExtensionTest.swift"
+  :outputTestPathColors: "./MyProject-UnitTests/Common/Extensions/UIColorExtensionTest.swift"
+  :testableImport: MyProject
+:app_name: MyProject
+```
+
+Multiple language support is available from version 1.4.0. Example `.redbreast.yml` files from version 1.4.0 and higher:
+
+If you are using only one language:
+
+```yml
+---
+:bundles:
+- :language: swift
+  :name: main
+  :reference: ".main"
+  :assetsSearchPath: "MyProject/**/*.xcassets"
+  :outputSourcePathImages: "./MyProject/Common/Extensions/UIImage+Redbreast.swift"
+  :outputSourcePathColors: "./MyProject/Common/Extensions/UIColor+Redbreast.swift"
+  :outputTestPathImages: "./MyProject-UnitTests/Common/Extensions/UIImageExtensionTest.swift"
+  :outputTestPathColors: "./MyProject-UnitTests/Common/Extensions/UIColorExtensionTest.swift"
+  :testableImport: MyProject
+:app_name: MyProject
+```
+
+and if you are using two or more languages:
+
+```yml
+---
+:bundles:
+- :language: swift
+  :name: main
+  :reference: ".main"
+  :assetsSearchPath: "**/*.xcassets"
+  :outputSourcePathImages: ".MyProject/Common/Extensions/UIImageExtension.swift"
+  :outputTestPathImages: ".MyProject/Common/Extensions/UIImageExtensionTest.swift"
+  :testableImport: MyProject
+- :language: swiftui
+  :name: MyProjectUI
+  :reference: ".MyProjectUI"
+  :assetsSearchPath: "MyProject/**/*.xcassets"
+  :outputSourcePathImages: ".MyProject/Common/Extensions/ImageExtension.swift"
+  :outputSourcePathColors: ".MyProject/Common/Extensions/ColorExtension.swift"
+  :outputTestPathImages: ".MyProject/Common/Extensions/ImageExtensionTest.swift"
+  :outputTestPathColors: ".MyProject/Common/Extensions/ColorExtensionTest.swift"
+  :testableImport: MyProject
+:app_name: MyProject
+```
+
 ### Generate
 
-When you finish creating `redbreast.yml` file,  run `redbreast generate` and all needed files will be generated.
+When you finish creating `.redbreast.yml` file,  run `redbreast generate` and all needed files will be generated.
 
 ### Install
 
