@@ -165,11 +165,11 @@ and if you are using two or more languages:
 - :language: swiftui
   :name: MyProjectUI
   :reference: ".MyProjectUI"
-  :assetsSearchPath: "**/*.xcassets"
-  :outputSourcePathImages: ".MyProjectUI/Common/Extensions/ImageExtension.swift"
-  :outputSourcePathColors: ".MyProjectUI/Common/Extensions/ColorExtension.swift"
-  :outputTestPathImages: ".MyProjectUI/Common/Extensions/ImageExtensionTest.swift"
-  :outputTestPathColors: ".MyProjectUI/Common/Extensions/ColorExtensionTest.swift"
+  :assetsSearchPath: "MyProject/**/*.xcassets"
+  :outputSourcePathImages: ".MyProject/Common/Extensions/ImageExtension.swift"
+  :outputSourcePathColors: ".MyProject/Common/Extensions/ColorExtension.swift"
+  :outputTestPathImages: ".MyProject/Common/Extensions/ImageExtensionTest.swift"
+  :outputTestPathColors: ".MyProject/Common/Extensions/ColorExtensionTest.swift"
   :testableImport: MyProject
 :app_name: MyProject
 ```
