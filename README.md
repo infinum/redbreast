@@ -103,7 +103,7 @@ For more examples checkout the sample project.
 
 ### Init
 
-After installing redbreast run `redbreast init` to create `redbreast.yml` file. This file is used for generating your extensions.
+After installing redbreast run `redbreast init` to create `.redbreast.yml` file. This file is used for generating your extensions.
 In the init you will be prompted to:
 
 * Choose a language in which colors/images will be generated.
@@ -114,7 +114,7 @@ In the init you will be prompted to:
 * Input the path where the files will be created
 * Choose to create tests for generated assets
 
-This is how your `redbreast.yml` file should look after the `redbreast init` if you are using version 1.3.1 and lower:
+This is how your `.redbreast.yml` file should look after the `redbreast init` if you are using version 1.3.1 and lower:
 
 ```yml
 ---
@@ -131,7 +131,7 @@ This is how your `redbreast.yml` file should look after the `redbreast init` if 
 :app_name: MyProject
 ```
 
-Multiple language support is available from version 1.4.0. Example `redbreast.yml` files from version 1.4.0 and higher:
+Multiple language support is available from version 1.4.0. Example `.redbreast.yml` files from version 1.4.0 and higher:
 
 If you are using only one language:
 
@@ -176,7 +176,7 @@ and if you are using two or more languages:
 
 ### Generate
 
-When you finish creating `redbreast.yml` file,  run `redbreast generate` and all needed files will be generated.
+When you finish creating `.redbreast.yml` file,  run `redbreast generate` and all needed files will be generated.
 
 ### Install
 
