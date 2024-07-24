@@ -1,6 +1,10 @@
 # Redbreast
 
-![](https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Turdus-migratorius-002.jpg/440px-Turdus-migratorius-002.jpg)
+[![License](https://img.shields.io/cocoapods/l/SemanticVersioning.svg)](https://github.com/infinum/redbreast/blob/master/LICENSE.md)
+
+<p align="center">
+    <img src="redbreast.svg" width="300" max-width="50%" alt="Japx"/>
+</p>
 
 ## Installation
 
@@ -205,4 +209,3 @@ Maintained and sponsored by [Infinum](http://www.infinum.com).
     </picture>
   </a>
 </p>
-
