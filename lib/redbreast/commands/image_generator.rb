@@ -24,7 +24,9 @@ module Redbreast
         bundles.each do |bundle|
           image_names = pull_asset_names(bundle[:assetsSearchPath])
           bundle_language = bundle[:language] || programming_language
-          write_images(image_names, bundle, bundle_language, app_name)
+          shouldOmitNamespace = bundle[:shouldOmitNamespace]
+          namespace = shouldOmitNamespace ? '' : app_name
+          write_images(image_names, bundle, bundle_language, namespace)
         end
       end
 
