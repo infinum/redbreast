@@ -24,7 +24,9 @@ module Redbreast
         bundles.each do |bundle|
           color_names = pull_asset_names(bundle[:assetsSearchPath])
           bundle_language = bundle[:language] || programming_language 
-          write_colors(color_names, bundle, bundle_language, app_name)
+          shouldOmitNamespace = bundle[:shouldOmitNamespace]
+          namespace = shouldOmitNamespace ? '' : app_name
+          write_colors(color_names, bundle, bundle_language, namespace)
         end
       end
 

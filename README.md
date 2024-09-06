@@ -113,6 +113,7 @@ In the init you will be prompted to:
 * Choose a language in which colors/images will be generated.
 * Input the application name (optional)
 * Input bundle names (default is main)
+* Input whether you want to omit namespacing (optional)
 * Choose whether you want to generate images, colors or both
 * Input the path to assets folder
 * Input the path where the files will be created
@@ -126,6 +127,7 @@ This is how your `.redbreast.yml` file should look after the `redbreast init` if
 :bundles:
 - :name: main
   :reference: ".main"
+  :shouldOmitNamespace: false
   :assetsSearchPath: "MyProject/**/*.xcassets"
   :outputSourcePathImages: "./MyProject/Common/Extensions/UIImage+Redbreast.swift"
   :outputSourcePathColors: "./MyProject/Common/Extensions/UIColor+Redbreast.swift"
