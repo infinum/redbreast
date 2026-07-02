@@ -65,7 +65,7 @@ module Redbreast
           temp_array = name.split('/')
           variable = temp_array.pop
           additional_text = temp_array.count.zero? ? '' : '.'
-          text += SPACER + SPACER + declaration + app_name_text + temp_array.join('.') + additional_text + clean_variable_name(variable)
+          text += SPACER + SPACER + declaration + app_name_text + temp_array.map { |enum| upper_camel_case(enum) }.join('.') + additional_text + clean_variable_name(variable)
           text += name == names.last ? '' : "\n"
         end
 
