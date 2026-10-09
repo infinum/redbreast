@@ -30,7 +30,24 @@ module Redbreast
       def configure_target(target)
         puts target.build_phases.class
         phase = target.new_shell_script_build_phase('Redbreast generate')
-        phase.shell_script = "PATH=$PATH:~/.rbenv/shims\nredbreast generate"
+        phase.shell_script = <<~SCRIPT
+          # Ensure correct Ruby version
+          if command -v rbenv &>/dev/null; then
+            eval "$(rbenv init -)"
+            rbenv install -s
+          fi
+
+          # Install Redbreast gem if not present
+          if ! gem list -i redbreast > /dev/null; then
+            gem install redbreast
+          fi
+
+          # Run Redbreast generate only for Debug configurations
+          if [[ "${CONFIGURATION}" == *Debug ]]; then
+            PATH=$PATH:~/.rbenv/shims
+            redbreast generate
+          fi
+        SCRIPT
       end
     end
   end
