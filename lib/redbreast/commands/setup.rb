@@ -18,11 +18,11 @@ module Redbreast
       end
 
       def call
-        language = language_prompt
         app_name = app_name_prompt
-        bundle_names = bundle_names_prompt(language).split(' ')
-        assets_types = assets_types_prompt
+        bundle_names = bundle_names_prompt().split(' ')
         bundles = bundle_names.map do |bundle|
+          language = language_prompt(bundle)
+          assets_types = assets_types_prompt(bundle)
           reference = bundle_reference(bundle, language)
           assets_search_path = assets_search_path_prompt(bundle)
           output_source_path_images = assets_types == 1 ? nil : images_sources_path_prompt(bundle, language)
@@ -31,6 +31,7 @@ module Redbreast
           output_test_path_images = assets_types != 1 && include_tests ? images_tests_path_prompt(bundle, language) : nil
           output_test_path_colors = assets_types != 0 && include_tests ? colors_tests_path_prompt(bundle, language) : nil
           fields = {
+            language: language,
             name: bundle,
             reference: reference,
             assetsSearchPath: assets_search_path,
@@ -43,7 +44,6 @@ module Redbreast
           compact fields
         end
         config = {
-          language: language,
           bundles: bundles,
           app_name: app_name
         }
@@ -55,9 +55,9 @@ module Redbreast
 
       # Language
 
-      def language_prompt
+      def language_prompt(bundle)
         languages = { 'Swift' => 'swift', 'SwiftUI' => 'swiftui', 'Objective-C' => 'objc', }
-        prompt.select('Choose a language: ', languages)
+        prompt.select("Choose a language for bundle #{bundle}: ", languages)
       end
 
       # Assets source path
@@ -69,16 +69,9 @@ module Redbreast
 
       # Bundle names promt
 
-      def bundle_names_prompt(language)
-        prompt_text = 'Please enter bundle names that you use separated by spaces'
-        case language
-        when 'objc'
-          prompt.ask(prompt_text, default: 'mainBundle')
-        when 'swift'
-          prompt.ask(prompt_text, default: 'main')
-        when 'swiftui'
-          prompt.ask(prompt_text, default: 'main')
-        end
+      def bundle_names_prompt()
+        prompt_text = 'Please enter bundle names that you use separated by spaces. For Obj-C use mainBundle.'
+        prompt.ask(prompt_text, default: 'main')
       end
 
       def bundle_reference(bundle_name, language)
@@ -95,7 +88,7 @@ module Redbreast
       # Images source path
 
       def images_sources_path_prompt(bundle, language)
-        prompt_text = "Where would you like to store images resources files for bundle #{bundle}?"
+        prompt_text = "Where would you like to store image resources files for bundle #{bundle}?"
         case language
         when 'objc'
           prompt.ask(prompt_text, default: './Common/Categories/Images')
@@ -109,7 +102,7 @@ module Redbreast
       # Colors source path
 
       def colors_sources_path_prompt(bundle, language)
-        prompt_text = "Where would you like to store colors resources files for bundle #{bundle}?"
+        prompt_text = "Where would you like to store color resources files for bundle #{bundle}?"
         case language
         when 'objc'
           prompt.ask(prompt_text, default: './Common/Categories/Colors')
@@ -127,7 +120,7 @@ module Redbreast
       end
 
       def images_tests_path_prompt(bundle, language)
-        prompt_text = "Where would you like to store tests for bundle #{bundle}?"
+        prompt_text = "Where would you like to store image tests for bundle #{bundle}?"
         case language
         when 'objc'
           prompt.ask(prompt_text, default: './Common/Categories/ImagesTest')
@@ -139,7 +132,7 @@ module Redbreast
       end
 
       def colors_tests_path_prompt(bundle, language)
-        prompt_text = "Where would you like to store tests for bundle #{bundle}?"
+        prompt_text = "Where would you like to store color tests for bundle #{bundle}?"
         case language
         when 'objc'
           prompt.ask(prompt_text, default: './Common/Categories/ColorsTest')
@@ -169,9 +162,9 @@ module Redbreast
 
       # Assets type prompt
 
-      def assets_types_prompt
+      def assets_types_prompt(bundle)
         types = { 'Images' => 0, 'Colors' => 1, 'Both' => 2 }
-        prompt.select('Choose a type: ', types)
+        prompt.select("Choose a type for bundle #{bundle}: ", types)
       end
     end
   end

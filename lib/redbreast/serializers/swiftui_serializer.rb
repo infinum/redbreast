@@ -5,12 +5,13 @@ module Redbreast
     # Used to save swift files
     class SwiftUI < Base
       include Helper::General
+      SPACER = "    "
 
       def save(output_source_path:, template_generator:, generate_colors:)
         directory = File.dirname(output_source_path)
         FileUtils.mkdir_p directory unless File.exist? directory
 
-        file = ERB.new(template_generator.template, nil, '-').result(binding)
+        file = ERB.new(template_generator.template, trim_mode: '-').result(binding)
         File.write(output_source_path, file)
       end
 
@@ -29,18 +30,18 @@ module Redbreast
           names_new_enum = []
           new_enum_name = enum_name
 
-          text += "\n" + spacing + 'enum ' + upper_camel_case(enum_name) + ' {'
+          text += "\n" + spacing + 'public enum ' + upper_camel_case(enum_name) + ' {'
           names_new, names_new_enum = separate_variables_from_folders(names: names, enum_name: enum_name, new_enum_name: new_enum_name, names_new_enum: names_new_enum, names_new: names_new)
 
           if !names_new_enum.empty? && new_enum_name == enum_name
             indentation += indentation.empty? || indentation[-1] == '/' ? '' : '/'
-            text += "\n" + generate_file_swift(names: names_new_enum, spacing: spacing + "\t", indentation: indentation + enum_name, variable: variable, bundle: bundle)
+            text += "\n" + generate_file_swift(names: names_new_enum, spacing: spacing + SPACER, indentation: indentation + enum_name, variable: variable, bundle: bundle)
           end
 
           unless names_new.empty?
 
             indentation += indentation.empty? || indentation[-1] == '/' ? '' : '/'
-            text += generate_file_swift(names: names_new, spacing: spacing + "\t", indentation: indentation + enum_name, variable: variable, bundle: bundle)
+            text += generate_file_swift(names: names_new, spacing: spacing + SPACER, indentation: indentation + enum_name, variable: variable, bundle: bundle)
           end
 
           text += "\n" + spacing + '}' + "\n"
@@ -49,11 +50,11 @@ module Redbreast
       end
 
       def generate_extension(extended_class, app_name)
-        text = 'extension ' + extended_class + " {\n"
-
+        text = 'extension ' + extended_class + " {"
         return text if app_name.nil? || app_name.empty?
 
-        text + "\tenum " + app_name + " {}\n}\n\nextension " + extended_class + '.' + app_name + " {"
+        text = 'public extension ' + extended_class + " {\n"
+        text + SPACER + "enum " + app_name + " {}\n}\n\nextension " + extended_class + '.' + app_name + " {"
       end
 
       def create_swift_test_cases(names:, declaration:, app_name:)
@@ -64,7 +65,7 @@ module Redbreast
           temp_array = name.split('/')
           variable = temp_array.pop
           additional_text = temp_array.count.zero? ? '' : '.'
-          text += "\t\t" + declaration + app_name_text + temp_array.join('.') + additional_text + clean_variable_name(variable)
+          text += SPACER + SPACER + declaration + app_name_text + temp_array.map { |enum| upper_camel_case(enum) }.join('.') + additional_text + clean_variable_name(variable)
           text += name == names.last ? '' : "\n"
         end
 
